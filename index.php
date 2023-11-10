@@ -12,10 +12,18 @@ Route::add('/', function() {
 }, 'get');
 
 Route::add('/login', function (){
-//    $uc = new \App\Controllers\UserController();
-//    $uc->login($_POST);
-    $input = json_decode(file_get_contents("php://input"), true);
-    var_dump($input);
+
+
+    $json = json_decode(file_get_contents("php://input"), true);
+    if($json['type'] == 'auth')
+    {
+        $uc = new \App\Controllers\UserController();
+        $uc->login($json);
+    }
+
+
+
+
 }, 'post');
 
 Route::run('/');

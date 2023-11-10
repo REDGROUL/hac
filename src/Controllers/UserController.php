@@ -6,13 +6,14 @@ use App\Models\UserModel as um;
 
 class UserController
 {
-    public function login($post_data)
+    public function login($json)
     {
-        if(!empty($post_data['login']) and !empty($post_data['pass']))
+
+        if(!empty($json))
         {
             $um = new um();
 
-            $res = $um->getUser($post_data['login'], $post_data['pass']);
+            $res = $um->getUser($json['login'], $json['pass']);
 
             if(!empty($res))
             {
@@ -25,9 +26,9 @@ class UserController
                 ]);
             }
             else
-                {
-                    echo 'ne zbs';
-                }
+            {
+                echo 'ne zbs';
+            }
         }
     }
 }
