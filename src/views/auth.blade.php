@@ -2,20 +2,12 @@
 <form id="loginForm">
     <h2>Авторизация</h2>
     <label for="loginUsername">Имя пользователя:</label>
-    <input type="text" id="loginUsername" name="loginUsername" required>
+    <input type="text" id="loginUsername" name="login" required>
 
     <label for="loginPassword">Пароль:</label>
-    <input type="password" id="loginPassword" name="loginPassword" required>
+    <input type="password" id="loginPassword" name="pass" required>
 
-    <button type="button" onclick="login()">Войти</button>
+    <button type="button" id="login">Войти</button>
 </form>
 
-<script>
-    function login() {
-        var username = document.getElementById("loginUsername").value;
-        var password = document.getElementById("loginPassword").value;
-        // Здесь вы можете добавить логику для проверки авторизации
-        console.log("Попытка входа:", username, password);
-    }
-</script>
 @include('footer')

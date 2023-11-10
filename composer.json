@@ -4,7 +4,8 @@
     "type": "project",
     "require": {
         "steampixel/simple-php-router": "^0.7.1",
-        "jenssegers/blade": "^1.4"
+        "jenssegers/blade": "^1.4",
+        "gabordemooij/redbean": "dev-master"
     },
     "license": "GNU GPL 2.0+",
     "autoload": {

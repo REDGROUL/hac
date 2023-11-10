@@ -11,5 +11,11 @@ Route::add('/', function() {
     echo $blade->make('auth',['title'=>'Авторизация'])->render();
 }, 'get');
 
+Route::add('/login', function (){
+//    $uc = new \App\Controllers\UserController();
+//    $uc->login($_POST);
+    $input = json_decode(file_get_contents("php://input"), true);
+    var_dump($input);
+}, 'post');
 
 Route::run('/');

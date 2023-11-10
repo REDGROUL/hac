@@ -1,0 +1,8 @@
+RewriteEngine on
+RewriteCond %{REQUEST_URI} ^(?!/files/images).*
+RewriteCond %{REQUEST_URI} ^(?!/files/sounds).*
+RewriteCond %{REQUEST_URI} ^(?!/src/views/css).*
+RewriteCond %{REQUEST_URI} ^(?!/src/views/js).*
+RewriteRule ^(.*)$ index.php?q=$1 [L]
+RewriteRule %{REQUEST_FILENAME} !-d
+RewriteRule %{REQUEST_FILENAME} !-f

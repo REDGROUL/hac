@@ -29,6 +29,10 @@ class ComposerStaticInitcddcb88a801c2a250cdb43bef90cc5ba
             'Symfony\\Component\\Translation\\' => 30,
             'Symfony\\Component\\Finder\\' => 25,
         ),
+        'R' => 
+        array (
+            'RedBeanPHP\\' => 11,
+        ),
         'P' => 
         array (
             'Psr\\SimpleCache\\' => 16,
@@ -88,6 +92,10 @@ class ComposerStaticInitcddcb88a801c2a250cdb43bef90cc5ba
         'Symfony\\Component\\Finder\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/finder',
+        ),
+        'RedBeanPHP\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gabordemooij/redbean/RedBeanPHP',
         ),
         'Psr\\SimpleCache\\' => 
         array (
