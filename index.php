@@ -11,8 +11,5 @@ Route::add('/', function() {
     echo $blade->make('auth',['title'=>'Авторизация'])->render();
 }, 'get');
 
-Route::add('/auth', function() {
-
-}, 'get');
 
 Route::run('/');
