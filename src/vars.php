@@ -1,0 +1,3 @@
+<?php
+
+$cvars['title'] = 'docs';
