@@ -3,7 +3,8 @@
     "description": "mvp",
     "type": "project",
     "require": {
-        "steampixel/simple-php-router": "^0.7.1"
+        "steampixel/simple-php-router": "^0.7.1",
+        "jenssegers/blade": "^1.4"
     },
     "license": "GNU GPL 2.0+",
     "autoload": {
