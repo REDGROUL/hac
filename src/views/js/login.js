@@ -2,10 +2,11 @@ let loginbtn = document.getElementById('login');
 
 loginbtn.addEventListener("click", (e)=> {
     const form = document.getElementById('loginForm');
-    const formData = new FormData(form);
 
     const login = document.getElementById('loginUsername').value;
     const pass = document.getElementById('loginPassword').value;
+
+
 
     let resp = JSON.stringify({
         "type":"auth",
@@ -14,16 +15,29 @@ loginbtn.addEventListener("click", (e)=> {
 
     fetch('http://hac2/login',{
         method: 'POST',
-        body: resp
+        body: resp,
+
     })
-        .then(response=>response.text())
+
+        .then(response=>response.json())
 
         .then(data=>{
-            console.log(data);
+
+            localStorage.setItem('access', data['access']);
+            localStorage.setItem('refresh', data['refresh']);
+
+            window.location ='/main';
         })
         .catch(error=>{
             console.log(error);
         })
 
 
+
+
 })
+
+function f() {
+
+
+}

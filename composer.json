@@ -5,7 +5,8 @@
     "require": {
         "steampixel/simple-php-router": "^0.7.1",
         "jenssegers/blade": "^1.4",
-        "gabordemooij/redbean": "dev-master"
+        "gabordemooij/redbean": "dev-master",
+        "firebase/php-jwt": "^6.9"
     },
     "license": "GNU GPL 2.0+",
     "autoload": {

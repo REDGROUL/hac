@@ -27,6 +27,8 @@ class UserModel
 
     }
 
+    
+
     /**
      * @return rb\OODBBean|rb\OODBBean[]
      */

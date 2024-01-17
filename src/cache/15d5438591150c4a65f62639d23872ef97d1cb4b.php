@@ -1,14 +1,14 @@
-@include('header')
+<?php echo $__env->make('header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-{{--<div class="container mt-5">--}}
-{{--    <h1>Материалы для изучения</h1>--}}
-{{--    <ul class="list-group">--}}
-{{--        <li class="list-group-item">Учебник по HTML и CSS</li>--}}
-{{--        <li class="list-group-item">Видеокурс по JavaScript</li>--}}
-{{--        <li class="list-group-item">Статья о принципах адаптивного дизайна</li>--}}
-{{--        <li class="list-group-item">Книга по алгоритмам и структурам данных</li>--}}
-{{--    </ul>--}}
-{{--</div>--}}
+
+
+
+
+
+
+
+
+
 
 
 <div class="container">
@@ -44,4 +44,4 @@
     <br>
 </div>
 
-@include('footer')
+<?php echo $__env->make('footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\OSPanel\domains\hac2\src\views/main.blade.php ENDPATH**/ ?>
