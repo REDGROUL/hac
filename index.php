@@ -49,7 +49,12 @@ Route::add('/tasks', function (){
 
 
 Route::add('/tasks/changeStatus', function (){
-
+    $json = json_decode(file_get_contents("php://input"), true);
+    if(!empty($json) && $json['type'] == 'changeStatus')
+    {
+        $tc = new \App\Controllers\TaskController();
+        $tc->changeStatus($json);
+    }
 }, 'post');
 
 

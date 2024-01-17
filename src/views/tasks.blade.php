@@ -13,6 +13,8 @@
     }
     </style>
 <div class="container py-5">
+
+    
     <div class="row">
 @foreach($boards as $board)
 
@@ -34,9 +36,9 @@
                         @foreach($tasks as $task)
                             @if($task['kanban_id'] == $board['id'])
 
-                                <div class="card mb-3 cursor-grab">
+                                <div class="card mb-3 cursor-grab" id="{{$task['id']}}">
                                     <div class="card-body">
-                                        <input hidden id="{{$board['id']}}" value="{{$board['id']}}">
+
                                         <p class="mb-0">{{$task['name']}}</p>
                                         <div class="text-right">
                                             <small class="text-muted mb-1 d-inline-block">25%</small>
@@ -72,8 +74,24 @@
     @endforeach
 
 
+
     </div>
 </div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Менеджер задач</strong>
+            <small>Только что</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Изменение статуса задачи прошло успешно!
+        </div>
+    </div>
+</div>
+
+
 <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.6.6/dragula.min.js'></script>
 <script>
     {{--dragula([--}}
@@ -109,8 +127,40 @@
         el.className = el.className.replace('ex-moved', '');
     }).on('drop', function (el) {
         el.className += ' ex-moved';
-        console.log("moved");
+
+
+        console.log(el.id);
         console.log(el.parentElement.id);
+
+        let resp = JSON.stringify({
+            "type":"changeStatus",
+            "taskId": el.id,
+            "kanban_id": el.parentElement.id});
+
+        fetch('http://hac2/tasks/changeStatus',{
+            method: 'POST',
+            body: resp,
+
+        })
+
+            .then(response=>response.text())
+
+            .then(data=>{
+
+
+                console.log(data);
+
+
+
+                var myToast = new bootstrap.Toast(document.getElementById('liveToast'));
+
+                // Покажите уведомление
+                myToast.show();
+
+            })
+            .catch(error=>{
+                console.log(error);
+            })
     });
 </script>
 @include('footer')
