@@ -11,3 +11,16 @@ body{
     background: white;
 }
 
+.profile-pic-mini{
+    border-radius: 40px;
+}
+
+.comment_card{
+    margin-top: 20px;
+}
+
+.margins{
+    margin-top: 20px;
+
+    margin-bottom: 20px;
+}

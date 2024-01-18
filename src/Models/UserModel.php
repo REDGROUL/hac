@@ -11,8 +11,8 @@ class UserModel
 
     public function __construct()
     {
-        rb\R::setup( 'mysql:host=localhost;dbname=kittyFrame','root', '' );
-        $this->usersdb = rb\R::dispense('users');
+
+        rb\R::dispense('users');
 
     }
 
@@ -36,6 +36,14 @@ class UserModel
     {
          return rb\R::findOne('users', 'login = ? AND pass = ? ', [$login,$pass]);
 
+    }
+
+    public function getAllusers() {
+        return rb\R::findAll('users');
+    }
+
+    public function getUserById($id) {
+        return rb\R::findOne('users', 'id = ?', [$id]);
     }
 
 
