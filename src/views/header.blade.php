@@ -11,10 +11,11 @@ $css = $_SERVER['SERVER_NAME'].'/src/views/css/style.css';
     <link rel="stylesheet" href="<?=$css?>">
     <link rel="stylesheet" href="../src/views/css/bootstrap.css">
     <link rel="stylesheet" href="../src/views/css/style.css">
-    <script src="../src/views/js/login.js"></script>
+
     <script src="../src/views/js/bootstrap.js"></script>
     <script src="../src/views/js/bootstrap.bundle.js"></script>
     <script src="../src/views/js/scrept.js"></script>
+
     <title>{{$title}}</title>
 </head>
 <body>

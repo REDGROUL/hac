@@ -38,7 +38,7 @@
         </div>
     </div>
 </div>
-
+<script src="../src/views/js/login.js"></script>
 {{--<div>--}}
 {{--<form id="loginForm">--}}
 {{--    <h2>Авторизация</h2>--}}
@@ -52,5 +52,5 @@
 {{--</form>--}}
 {{--</div>--}}
 
-
+@include('notify')
 @include('footer')

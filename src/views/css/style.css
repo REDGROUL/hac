@@ -24,3 +24,12 @@ body{
 
     margin-bottom: 20px;
 }
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    max-width: 300px; /* Максимальная ширина контейнера */
+    z-index: 1000; /* Переместите контейнер выше, чем остальной контент */
+    overflow: hidden; /* Обрезать содержимое, если оно не вмещается */
+}
