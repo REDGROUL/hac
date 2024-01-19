@@ -183,7 +183,7 @@
             "user_id": userId,
             "text": message});
 
-        fetch('http://hac2/addNewComment',{
+        fetch('/addNewComment',{
             method: 'POST',
             body: resp,
 
@@ -225,7 +225,7 @@
             let resp = JSON.stringify({
                 "type":"deltask",
                 "id": id});
-            fetch('http://hac2/deltask',{
+            fetch('/deltask',{
                 method: 'POST',
                 body: resp,
 

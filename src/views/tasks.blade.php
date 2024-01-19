@@ -38,7 +38,7 @@
                                 <div class="card mb-3 cursor-grab task" id="{{$task['id']}}">
                                     <div class="card-body">
                                         <img class="card-img-top" src="https://source.unsplash.com/sECcwm6BN8w/400x200" alt="Bootstrap Kanban Board" />
-                                        <p class="mb-0"><a href="http://hac2/task/{{$task['id']}}">{{$task['name']}}</a></p>
+                                        <p class="mb-0"><a href="/task/{{$task['id']}}">{{$task['name']}}</a></p>
 
 
 
@@ -183,7 +183,7 @@
             "taskId": el.id,
             "kanban_id": el.parentElement.id});
 
-        fetch('http://hac2/tasks/changeStatus',{
+        fetch('/tasks/changeStatus',{
             method: 'POST',
             body: resp,
 
@@ -261,7 +261,7 @@
 
 
 
-        fetch('http://hac2/tasks/newTask',{
+        fetch('/tasks/newTask',{
             method: 'POST',
             body: resp,
 

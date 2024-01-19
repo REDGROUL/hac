@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             "login": login,
             "pass": pass});
 
-        fetch('http://hac2/login',{
+        fetch('/login',{
             method: 'POST',
             body: resp,
 

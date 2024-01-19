@@ -84,7 +84,7 @@
             "type":"addBoard",
             "name": name,
             "descr": descr});
-        fetch('http://hac2/addBoard',{
+        fetch('/addBoard',{
             method: 'POST',
             body: resp,
 
@@ -131,7 +131,7 @@
             let resp = JSON.stringify({
                 "type":"delete",
                 "id": id});
-            fetch('http://hac2/delboard',{
+            fetch('/delboard',{
                 method: 'POST',
                 body: resp,
 
