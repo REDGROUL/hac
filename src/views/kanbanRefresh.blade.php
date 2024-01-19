@@ -27,6 +27,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
+                                        <input hidden id="boardName_{{$board['id']}}" value="{{$board['name']}}">
                                         Название: {{$board['name']}}
                                     </div>
                                 </div>
@@ -47,31 +48,8 @@
     </div>
 
 </div>
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Менеджер досок</strong>
-            <small>Только что</small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            Обновляем список досок!
-        </div>
-    </div>
-</div>
 
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <div id="faildel" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Менеджер досок</strong>
-            <small>Только что</small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            Нельзя удалить доску с задачами!
-        </div>
-    </div>
-</div>
+
 <script>
     let add = document.getElementById("addKanban");
     let del = document.getElementById("delete");
@@ -84,6 +62,7 @@
             "type":"addBoard",
             "name": name,
             "descr": descr});
+        ShowNotify('Менеджер досок', 'Добавляем новую доску')
         fetch('/addBoard',{
             method: 'POST',
             body: resp,
@@ -98,11 +77,10 @@
                 console.log(data);
 
 
+                if(data.status = "saved") {
+                    ShowNotify('Менеджер досок', 'Доска "'+data.name + '" добавлена', 'success');
+                }
 
-                var myToast = new bootstrap.Toast(document.getElementById('liveToast'));
-
-                // Покажите уведомление
-                myToast.show();
                 setTimeout(function() {
                     // Перезагрузить текущую страницу
                     location.reload();
@@ -112,10 +90,7 @@
             })
             .catch(error=>{
                 console.log(error);
-                var myToast = new bootstrap.Toast(document.getElementById('faildel'));
-
-                // Покажите уведомление
-                myToast.show();
+                ShowNotify('Менеджер досок', error, 'danger')
 
             })
     })
@@ -126,11 +101,12 @@
         elem.addEventListener('click', ()=>{
             let id = elem.parentElement.id
             console.log(id);
-            let name = document.getElementById("name").value;
+            let name = document.getElementById("boardName_"+id).value;
             let descr = document.getElementById("name").value;
             let resp = JSON.stringify({
                 "type":"delete",
                 "id": id});
+            ShowNotify('Менеджер досок', 'Удаляем доску "'+name+'"', 'warning')
             fetch('/delboard',{
                 method: 'POST',
                 body: resp,
@@ -146,10 +122,7 @@
 
 
 
-                    var myToast = new bootstrap.Toast(document.getElementById('liveToast'));
-
-                    // Покажите уведомление
-                    myToast.show();
+                    ShowNotify('Менеджер досок', 'Доска "'+name+'" удалена', 'success')
                     setTimeout(function() {
                         // Перезагрузить текущую страницу
                         location.reload();
@@ -158,11 +131,9 @@
 
                 })
                 .catch(error=>{
-                    console.log(error);
-                    var myToast = new bootstrap.Toast(document.getElementById('faildel'));
 
-                    // Покажите уведомление
-                    myToast.show();
+
+                    ShowNotify('Менеджер досок', 'На доске "'+name+'" есть задачи, такую доску удалить нельзя', 'danger')
                 })
         })
     })

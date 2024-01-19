@@ -51,6 +51,4 @@
 {{--    <button type="button" id="login">Войти</button>--}}
 {{--</form>--}}
 {{--</div>--}}
-
-@include('notify')
 @include('footer')

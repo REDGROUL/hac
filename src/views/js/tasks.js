@@ -27,35 +27,39 @@ buttons.forEach(function(button) {
 let saveTask = document.getElementById("saveTask");
 
 saveTask.addEventListener("click", ()=>{
-    let name = document.getElementById("title").value;
-    let description = document.getElementById("description").value;
-    let modal_board_id = document.getElementById("modal_board_id").value;
-    let modal_owner_id = document.getElementById("modal_owner_id").value;
-    let date = document.getElementById("date").value;
-    let worker = document.getElementById("worker").value;
-    let stat = document.getElementById("status").value;
-    console.log(date);
-    console.log(worker);
-    let resp = JSON.stringify({
-        "type":"newTask",
-        "name": name,
-        "description": description,
-        "kanban_id": modal_board_id,
-        "owner_id":modal_owner_id,
-        "worker_id": worker,
-        "date":date,
-        "status": stat
-    });
+    let form = document.getElementById('newTaskForm');
+
+    let formData = new FormData(form);
+
+    // let name = document.getElementById("title").value;
+    // let description = document.getElementById("description").value;
+    // let modal_board_id = document.getElementById("modal_board_id").value;
+    // let modal_owner_id = document.getElementById("modal_owner_id").value;
+    // let date = document.getElementById("date").value;
+    // let worker = document.getElementById("worker").value;
+    // let stat = document.getElementById("status").value;
+    // console.log(date);
+    // console.log(worker);
+    // let resp = JSON.stringify({
+    //     "type":"newTask",
+    //     "name": name,
+    //     "description": description,
+    //     "kanban_id": modal_board_id,
+    //     "owner_id":modal_owner_id,
+    //     "worker_id": worker,
+    //     "date":date,
+    //     "status": stat
+    // });
 
 
 
     fetch('/tasks/newTask',{
         method: 'POST',
-        body: resp,
+        body: formData,
 
     })
 
-        .then(response=>response.json())
+        .then(response=>response.text())
 
         .then(data=>{
 
@@ -63,15 +67,12 @@ saveTask.addEventListener("click", ()=>{
             console.log(data);
 
 
-
-            var myToast = new bootstrap.Toast(document.getElementById('liveToast'));
-
-            // Покажите уведомление
-            myToast.show();
-            setTimeout(function() {
-                // Перезагрузить текущую страницу
-                location.reload();
-            }, 500);
+            ShowNotify("Менеджер задач", "Сохраняем и обновляем", 'success');
+            //
+            // setTimeout(function() {
+            //     // Перезагрузить текущую страницу
+            //     location.reload();
+            // }, 500);
 
 
 
@@ -91,10 +92,6 @@ var saveButton = document.querySelector('#myModal .btn-primary');
 // Добавьте обработчик события на кнопку "Сохранить"
 saveButton.addEventListener('click', function() {
     // Выполните здесь дополнительные действия, если необходимо
+    ShowNotify("Менеджер задач", "Создаем новую задачу");
 
-
-    var myToast = new bootstrap.Toast(document.getElementById('saving'));
-
-    // Покажите уведомление
-    myToast.show();
 });

@@ -29,12 +29,31 @@ Route::add('/tasks/changeStatus', function (){
 
 
 Route::add('/tasks/newTask', function (){
-    $json = json_decode(file_get_contents("php://input"), true);
-    if(!empty($json) && $json['type'] == 'newTask')
-    {
-        $tc = new \App\Controllers\TaskController();
-        $tc->newTask($json);
+//    $json = file_get_contents("php://input");
+//    echo json_encode($json);
+
+
+
+
+    $tc = new \App\Controllers\TaskController();
+
+    echo json_encode($_FILES);
+    if(($_FILES['file']['size'] > 0)) {
+        $uploaddir = 'res/images/';
+        $uploadfile = $uploaddir . basename($_FILES['file']['name']);
+
+
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+            $_POST['photo'] = $uploadfile;
+
+            $tc->newTask($_POST);
+        }
+    } else {
+        $_POST['photo'] = "res/images/noimage.jpg";
+        $tc->newTask($_POST);
     }
+
+
 }, 'post');
 
 Route::add('/addNewComment', function (){

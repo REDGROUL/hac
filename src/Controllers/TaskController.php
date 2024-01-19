@@ -37,6 +37,7 @@ class TaskController
         $taskDb->kanban_id = end($kanban_id);
         $taskDb->date = $data['date'];
         $taskDb->status = $data['status'];
+        $taskDb->task_photo = $data['photo'];
 
 
         rb\R::store($taskDb);

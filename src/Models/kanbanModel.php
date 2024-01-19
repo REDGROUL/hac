@@ -24,6 +24,7 @@ class kanbanModel
 
         echo json_encode([
             "status"=>"saved",
+            "name" => $data['name']
         ]);
     }
 

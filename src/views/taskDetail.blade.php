@@ -11,10 +11,10 @@
             </div>
         </div>
         <div class="col">
-            <div class="card">
-                <div class="card-body">
+            <div class="card bg-{{$currentTask['status']['color']}}">
+                <div class="card-body ">
                     <h4 class="card-title">Статус</h4>
-                    <p class="card-text">{{$currentTask['status']}}</p>
+                    <p class="card-text ">{{$currentTask['status']['name']}}</p>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
                         $um = new \App\Models\UserModel();
                         $user = $um->getUserById($currentTask['owner_id']);
                     ?>
-                    <p class="card-text">{{$user['name']}}</p>
+                    <p class="card-text"><a href="/profile/{{$user['id']}}" >{{$user['name']}}</a></p>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
                     <?
                     $user = $um->getUserById($currentTask['worker_id']);
                     ?>
-                    <p class="card-text">{{$user['name']}}</p>
+                    <p class="card-text"><a href="/profile/{{$user['id']}}" >{{$user['name']}}</a></p>
                 </div>
             </div>
         </div>
