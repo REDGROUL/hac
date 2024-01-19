@@ -2,22 +2,18 @@
 
 use Steampixel\Route;
 
-
-Route::add('/', function() {
-    $blade = new Jenssegers\Blade\Blade('src/views','src/cache');
+$blade = new Jenssegers\Blade\Blade('src/views','src/cache');
+Route::add('/', function() use ($blade){
     echo $blade->make('auth',['title'=>'Авторизация', 'navbar_show'=>false])->render();
 }, 'get');
 
 
-Route::add('/main', function (){
-    $blade = new Jenssegers\Blade\Blade('src/views','src/cache');
+Route::add('/main', function () use ($blade){
     echo $blade->make('main', ['navbar_show'=>true])->render();
 }, 'get');
 
 
-Route::add('/tasks', function (){
-    $blade = new Jenssegers\Blade\Blade('src/views','src/cache');
-
+Route::add('/tasks', function () use ($blade){
     $taskModel = new \App\Models\TasksModel();
     $boards = $taskModel->getAllBoard();
     $tasks = $taskModel->getAllTasks();
@@ -31,13 +27,13 @@ Route::add('/tasks', function (){
     }
 
 
-    $um = new \App\Models\UserModel();
+    $um = new \App\Models\UserModel() ;
     $users = $um->getAllusers();
     echo $blade->make('tasks', ['navbar_show'=>true, 'boards'=>$boards, 'tasks'=>$tasks, 'users'=>$users, 'statuses'=>$stats])->render();
 });
 
 
-Route::add('/task/([0-9-]*)', function ($id) {
+Route::add('/task/([0-9-]*)', function ($id) use ($blade) {
 
     $tm = new \App\Models\TasksModel();
     $data = $tm->getTaskById($id);
@@ -60,37 +56,32 @@ Route::add('/task/([0-9-]*)', function ($id) {
         $comment['user_data'] = $um->getUserById($comment['user_id']);
     }
 
-    $blade = new Jenssegers\Blade\Blade('src/views','src/cache');
+
     echo $blade->make('taskDetail', ['navbar_show'=>true, 'currentTask'=>$data, 'comments'=>$comments])->render();
 },'get');
 
 
-Route::add('/profile/([0-9-]*)', function ($id){
+Route::add('/profile/([0-9-]*)', function ($id) use ($blade){
     $um = new \App\Models\UserModel();
     $currentUser = $um->getUserById($id);
-
     $tm = new \App\Models\TasksModel();
     $tasks = $tm->getTaskByUserId($id);
-
-    $blade = new Jenssegers\Blade\Blade('src/views','src/cache');
     echo $blade->make('profile', ['navbar_show'=>true, 'userData'=>$currentUser, 'tasks'=>$tasks])->render();
 });
 
-Route::add('/ref', function (){
+Route::add('/ref', function () use ($blade){
     $km = new \App\Models\kanbanModel();
     $kanbanList = $km->getAllBoards();
 
-    $blade = new Jenssegers\Blade\Blade('src/views','src/cache');
+
     echo $blade->make('kanbanRefresh', ['navbar_show'=>true, 'boards'=>$kanbanList])->render();
 });
 
-Route::add('/logout', function (){
-    $blade = new Jenssegers\Blade\Blade('src/views','src/cache');
+Route::add('/logout', function () use ($blade){
     echo $blade->make('profile', ['navbar_show'=>true])->render();
 });
 
 
-Route::add('/chat', function (){
-    $blade = new Jenssegers\Blade\Blade('src/views','src/cache');
+Route::add('/chat', function () use ($blade){
     echo $blade->make('chat', ['navbar_show'=>true])->render();
 });
