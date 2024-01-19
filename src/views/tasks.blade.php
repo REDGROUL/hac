@@ -46,7 +46,7 @@
                                             <img class="card-img-top"
                                                  src="{{$task['task_photo']}}"
                                                  alt="Bootstrap Kanban Board"/>
-                                            <p class="mb-0"><a href="/task/{{$task['id']}}">{{$task['name']}}</a></p>
+                                            <h5 class="mb-2"><a href="/task/{{$task['id']}}">{{$task['name']}}</a></h5>
 
 
                                             <div class="text-right">
@@ -60,7 +60,7 @@
                                             </div>
 
                                             <div class="text-right">
-                                                Срок сдачи: {{$task['date']}}
+                                                Дата: {{$task['date']}}
                                             </div>
 
 
@@ -158,6 +158,7 @@
 <script>
 
 
+
     dragula([
         @foreach($boards as $board)
         document.getElementById('{{$board["id"]}}'),
@@ -175,6 +176,7 @@
             "kanban_id": el.parentElement.id
         });
         ShowNotify("Менеджер задач", "Меняем статус задачи");
+        notificationSound.play();
         fetch('/tasks/changeStatus', {
             method: 'POST',
             body: resp,

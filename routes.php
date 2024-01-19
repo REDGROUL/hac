@@ -88,3 +88,9 @@ Route::add('/logout', function (){
     $blade = new Jenssegers\Blade\Blade('src/views','src/cache');
     echo $blade->make('profile', ['navbar_show'=>true])->render();
 });
+
+
+Route::add('/chat', function (){
+    $blade = new Jenssegers\Blade\Blade('src/views','src/cache');
+    echo $blade->make('chat', ['navbar_show'=>true])->render();
+});

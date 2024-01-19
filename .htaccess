@@ -1,5 +1,6 @@
 RewriteEngine on
 RewriteCond %{REQUEST_URI} ^(?!/res/images).*
+RewriteCond %{REQUEST_URI} ^(?!/res/audio).*
 RewriteCond %{REQUEST_URI} ^(?!/files/sounds).*
 RewriteCond %{REQUEST_URI} ^(?!/src/views/css).*
 RewriteCond %{REQUEST_URI} ^(?!/src/views/js).*

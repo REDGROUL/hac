@@ -4,8 +4,8 @@
 //     ShowNotify('ehhehehe', 'work');
 // })
 function ShowNotify(header, text, type ="primary" ) {
-        console.log("click")
 
+        let notificationSound = document.getElementById("notificationSound");
         let toastElement = document.createElement("div");
         toastElement.classList.add("toast");
         toastElement.setAttribute("role", "alert");
