@@ -91,3 +91,33 @@ Route::add('/deltask', function (){
         $tc->delTaskById($json['id']);
     }
 }, 'post');
+
+Route::add('/addUser', function (){
+    $json = json_decode(file_get_contents("php://input"), true);
+    $um = new \App\Models\UserModel();
+
+    $um->addUser($json['login'], $json['pass'], $json['name'], $json['role'], $json['dep']);
+
+
+}, 'post');
+
+Route::add('/addDep', function (){
+    $json = json_decode(file_get_contents("php://input"), true);
+    $dm = new \App\Models\DepartmentModel();
+    $dm->createDep($json);
+}, 'post');
+
+Route::add('/getUserByDep/([0-9-]*)', function ($id){
+    $um = new \App\Models\UserModel();
+    $data = $um->getUserByDepId($id);
+    echo json_encode($data);
+}, 'get');
+
+Route::add('/updateTask', function (){
+    $json = json_decode(file_get_contents("php://input"), true);
+    $tm = new \App\Models\TasksModel();
+
+
+    $tm->updateTask($json);
+
+}, 'post');

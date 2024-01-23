@@ -39,6 +39,7 @@ class UserController
             $_SESSION['uid'] = $res['id'];
             $_SESSION['role'] = $res['role'];
             $_SESSION['auth'] = true;
+            $_SESSION['dep'] = $res['department'];
 
             echo json_encode([
                 "status"=>"ok",

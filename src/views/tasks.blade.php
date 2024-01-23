@@ -8,8 +8,51 @@
 
 </style>
 <script src="../src/views/js/auth.js"></script>
-<div class="container py-5">
+<?
+$dm = new \App\Models\DepartmentModel();
+$departs = $dm->getAllDerartments();
 
+
+?>
+<div class="container py-5">
+    @if($_SESSION['role'] == '1')
+        <div class="card mb-3">
+            <div class="card-header bg-light">
+                <h3 class="card-title h5 mb-1">
+                    Выбор отдела
+                </h3>
+            </div>
+
+
+
+
+
+            <div class="card-body">
+
+
+
+                <ul class="list-group">
+                    @foreach($departs as $dep)
+                    <li class="list-group-item"><a href="/tasks/{{$dep['id']}}">{{$dep['name']}}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+
+    @endif
+
+        <div class="card mb-3">
+            <div class="card-header bg-light">
+                <h3 class="card-title h5 mb-1">
+
+                    @if(isset($curent_dep))
+                    {{$departs[$curent_dep]['name']}}
+                    @else
+                    {{$departs[$_SESSION['dep']]['name']}}
+                    @endif
+                </h3>
+            </div>
+        </div>
 
     <div class="row">
     @foreach($boards as $board)
@@ -35,7 +78,7 @@
                                     <div class="card mb-3 cursor-grab task" id="{{$task['id']}}">
                                         <div class="card-body">
                                             <img class="card-img-top"
-                                                 src="{{$task['task_photo']}}"
+                                                 src="/{{$task['task_photo']}}"
                                                  alt="Bootstrap Kanban Board"/>
                                             <h5 class="mb-2"><a href="/task/{{$task['id']}}">{{$task['name']}}</a></h5>
 
@@ -43,11 +86,18 @@
                                             <div class="text-right">
                                                 Описание: {{$task['description']}}
                                             </div>
+
+                                            <div class="text-right">
+                                                Отдел: {{$departs[$task['dep_id']]['name']}}
+                                            </div>
                                             <div class="text-right">
                                                 Назначил: {{$users[$task['owner_id']]['name']}}
                                             </div>
                                             <div class="text-right">
                                                 Ответственный: {{$users[$task['worker_id']]['name']}}
+                                            </div>
+                                            <div class="text-right">
+                                                Открыта: {{$task['date_open']}}
                                             </div>
 
                                             <div class="text-right">
@@ -90,6 +140,18 @@
                         <input hidden name="kanban_id" id="modal_board_id">
                         <input hidden name = "owner_id" id="modal_owner_id">
 
+
+                        <?
+
+                        ?>
+
+
+{{--                        @if(isset($curent_dep))--}}
+{{--                        <input  name = "dep_id" id="dep_id" value="{{$curent_dep}}">--}}
+{{--                        @else--}}
+{{--                            <input  name = "dep_id" id="dep_id" value="{{$_SESSION['dep']}}">--}}
+{{--                        @endif--}}
+
                         <div class="mb-3">
                             <label for="title" class="form-label">Название</label>
                             <input type="text" name="name" class="form-control" id="title" placeholder="Введите название">
@@ -99,13 +161,21 @@
                             <textarea class="form-control" name="description" id="description" rows="3"
                                       placeholder="Введите описание"></textarea>
                         </div>
-
+                        <div class="mb-3">
+                            <label for="worker" class="form-label">Отдел</label>
+                            <select class="form-select" name="dep_id" id="dep_id" aria-label="Выберите язык">
+                                <option value="0" selected>Выберите отдел</option>
+                                @foreach($departs as $dep)
+                                    <option value="{{$dep['id']}}">{{$dep['name']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="mb-3">
                             <label for="worker" class="form-label">Ответственный за выполнение</label>
                             <select class="form-select" name="worker_id" id="worker" aria-label="Выберите язык">
-                                @foreach($users as $user)
-                                    <option value="user_{{$user['id']}}">{{$user['name']}}</option>
-                                @endforeach
+{{--                                @foreach($users as $user)--}}
+{{--                                    <option value="user_{{$user['id']}}">{{$user['name']}}</option>--}}
+{{--                                @endforeach--}}
                             </select>
                         </div>
 
@@ -189,6 +259,39 @@
                 console.log(error);
             })
     });
+
+    let workerlist = document.getElementById("worker");
+    let dep_id = document.getElementById("dep_id");
+
+    dep_id.addEventListener('change', ()=>{
+///getUserByDep/
+        workerlist.innerHTML = '';
+
+       // ShowNotify("Менеджер задач", "Меняем статус задачи");
+        ShowNotify("Менеджер пользователей", "Получаем данные по отделу", 'warning')
+        fetch('/getUserByDep/'+dep_id.value)
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                let dt = Object.keys(data)
+                console.log(dt);
+                dt.forEach((usr)=>{
+                    console.log(data[usr].name);
+                    workerlist.innerHTML+=`<option value="user_${data[usr].id}">${data[usr].name}</option>`;
+
+                })
+
+                //ShowNotify("Менеджер задач", "Изменение статуса задачи прошло успешно!", 'success');
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+    })
+
 
 </script>
 <script src="../src/views/js/tasks.js"></script>

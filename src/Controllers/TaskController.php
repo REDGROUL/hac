@@ -38,7 +38,9 @@ class TaskController
         $taskDb->date = $data['date'];
         $taskDb->status = $data['status'];
         $taskDb->task_photo = $data['photo'];
-        var_dump($data);
+        $taskDb->date_open = date("Y-m-d H:i");
+        $taskDb->dep_id = $data['dep_id'];
+
 
         rb\R::store($taskDb);
 

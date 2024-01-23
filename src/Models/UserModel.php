@@ -17,13 +17,25 @@ class UserModel
     }
 
 
-    public function addUser($login, $pass, $name)
+    public function addUser($login, $pass, $name, $role, $dep)
     {
-        $this->usersdb->login = $login;
-        $this->usersdb->pass = $pass;
-        $this->usersdb->name = $name;
+        $userDb = rb\R::dispense('users');
+        $userDb->login = $login;
+        $userDb->pass = $pass;
+        $userDb->name = $name;
+        $userDb->role = $role;
+        $userDb->department = $dep;
 
-        rb\R::store($this->usersdb);
+
+
+        ;
+        try{
+            rb\R::store($userDb);
+            echo json_encode(['status'=>"ok"]);
+
+        } catch (\Exception $e) {
+            echo json_encode(['status'=>"bad"]);
+        }
 
     }
 
@@ -44,6 +56,10 @@ class UserModel
 
     public function getUserById($id) {
         return rb\R::findOne('users', 'id = ?', [$id]);
+    }
+
+    public function getUserByDepId($id) {
+        return rb\R::findAll('users', 'department = ?', [$id]);
     }
 
 

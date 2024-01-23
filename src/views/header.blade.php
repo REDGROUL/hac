@@ -59,6 +59,7 @@ session_start();
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/ref">Редактирование канбана</a></li>
                         <li><a class="dropdown-item" href="/newUser">Регистрация пользователя</a></li>
+                        <li><a class="dropdown-item" href="/deps">Отделы</a></li>
                     </ul>
                 </li>
                 @endif
