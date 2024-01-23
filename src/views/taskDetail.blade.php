@@ -1,6 +1,6 @@
 @include('header')
 <div class="container mt-5">
-    <h1>{{$currentTask['name']}}</h1>
+
     <input hidden value="{{$currentTask['id']}}" id="task_id">
     <div class="row row-cols-1 row-cols-md-2 g-4">
         <div class="col">
@@ -129,46 +129,6 @@
 
     </div>
 
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <div id="saving" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Менеджер комментариев</strong>
-                <small>Только что</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                Отправляем и обновляем...
-            </div>
-        </div>
-    </div>
-
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <div id="unsaving" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Менеджер комментариев</strong>
-                <small>Только что</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-               Ошибка попробуйте еще раз
-            </div>
-        </div>
-    </div>
-
-
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <div id="closing" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Менеджер задач</strong>
-                <small>Только что</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                Закрываем задачу и переводим в канбан!
-            </div>
-        </div>
-    </div>
-
 </div>
 <script>
     let btnSendcomment = document.getElementById("addComment");
@@ -195,10 +155,11 @@
 
 
                 console.log(data);
-                var good = new bootstrap.Toast(document.getElementById('saving'));
+
+                ShowNotify("Менеджер комментарией", "Коментарий сохранен", 'success')
 
                 // Покажите уведомление
-                good.show();
+
                 setTimeout(function() {
                     // Перезагрузить текущую страницу
                     location.reload();
@@ -206,11 +167,7 @@
 
             })
             .catch(error=>{
-
-                var bad = new bootstrap.Toast(document.getElementById('unsaving'));
-
-                // Покажите уведомление
-                bad.show();
+                ShowNotify("Менеджер комментарией", "Ошибка сохранения", 'danger')
                 console.log(error);
             })
     })
@@ -240,10 +197,7 @@
 
 
 
-                    var good = new bootstrap.Toast(document.getElementById('closing'));
-
-                    // Покажите уведомление
-                    good.show();
+                    ShowNotify("Менеджер задач", "задача закрыта", 'warning');
                     setTimeout(function() {
                         // Перезагрузить текущую страницу
                         window.location.href = "/tasks";
@@ -254,10 +208,7 @@
                 })
                 .catch(error=>{
                     console.log(error);
-                    var myToast = new bootstrap.Toast(document.getElementById('faildel'));
-
-                    // Покажите уведомление
-                    myToast.show();
+                    ShowNotify("Менеджер задач", "Ошибка", 'danger');
                 })
     })
 </script>

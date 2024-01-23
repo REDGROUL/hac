@@ -1,5 +1,6 @@
 <?
 $css = $_SERVER['SERVER_NAME'].'/src/views/css/style.css';
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +38,7 @@ $css = $_SERVER['SERVER_NAME'].'/src/views/css/style.css';
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
                         Личные данные
                     </a>
                     <ul class="dropdown-menu">
@@ -46,6 +48,10 @@ $css = $_SERVER['SERVER_NAME'].'/src/views/css/style.css';
                 </li>
 
 
+    <?
+
+                ?>
+                @if($_SESSION['role'] == '1')
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Админка
@@ -55,6 +61,7 @@ $css = $_SERVER['SERVER_NAME'].'/src/views/css/style.css';
                         <li><a class="dropdown-item" href="/newUser">Регистрация пользователя</a></li>
                     </ul>
                 </li>
+                @endif
             </ul>
         </div>
     </div>

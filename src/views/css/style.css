@@ -33,3 +33,11 @@ body{
     z-index: 1000; /* Переместите контейнер выше, чем остальной контент */
     overflow: hidden; /* Обрезать содержимое, если оно не вмещается */
 }
+
+.cursor-grab {
+    cursor: grab;
+}
+
+.tasks {
+    min-height: 450px;
+}

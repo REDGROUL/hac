@@ -18,11 +18,30 @@
                 @endif
 
                 <div class="card-body">
-                    <h5 class="card-title">{{$userData['name']}}</h5>
+                    <h5 class="card-title"></h5>
+                    <?$dm = new \App\Models\DepartmentModel();
+                        $dmName = $dm->getDepartmentNameById($userData['department']);
+
+                    ?>
+                    <h5 class="card-title"></h5>
                 </div>
             </div>
         </div>
+
         <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">ФИО: {{$userData['name']}}</h5>
+                    <h5 class="card-title">Отдел: {{$dmName['name']}}</h5>
+                    <?
+                        $rm = new \App\Models\RoleModel();
+                        $role = $rm->getRoleById($userData['role']);
+
+                    ?>
+                    <h5 class="card-title">Права: {{$role['name']}}</h5>
+
+                </div>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Панель редактирования</h5>

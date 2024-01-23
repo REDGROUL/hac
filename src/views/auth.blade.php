@@ -4,28 +4,13 @@
     html, body {
         height: 100%;
     }
-    .logo{
-        width: 200px;
-        height: 230px;
-        position: relative;
-        left: 33%;
-        margin-top: 20px    ;
 
-    }
-    .logo-img{
-        border-radius: 80px;
-    }
 </style>
 <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">Авторизация в Awesome kanban</div>
-                <div class="logo">
-                    <div class="text-center">
-                    <img src="res/images/logo.jpg" class="card-img-top logo-img "  alt="Картинка">
-                    </div>
-                </div>
                 <h2></h2>
                 <div class="card-body">
 

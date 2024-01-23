@@ -3,22 +3,13 @@
 <style>
 
 
-    .cursor-grab {
-        cursor: grab;
-    }
 
-    .tasks {
-        min-height: 450px;
-    }
 
 
 </style>
+<script src="../src/views/js/auth.js"></script>
 <div class="container py-5">
 
-
-    <?
-
-    ;?>
 
     <div class="row">
     @foreach($boards as $board)
@@ -98,7 +89,7 @@
                     <div>
                         <input hidden name="kanban_id" id="modal_board_id">
                         <input hidden name = "owner_id" id="modal_owner_id">
-                        <input hidden name = "worker_id" id="modal_worker_id">
+
                         <div class="mb-3">
                             <label for="title" class="form-label">Название</label>
                             <input type="text" name="name" class="form-control" id="title" placeholder="Введите название">
@@ -111,7 +102,7 @@
 
                         <div class="mb-3">
                             <label for="worker" class="form-label">Ответственный за выполнение</label>
-                            <select class="form-select" name="worker" id="worker" aria-label="Выберите язык">
+                            <select class="form-select" name="worker_id" id="worker" aria-label="Выберите язык">
                                 @foreach($users as $user)
                                     <option value="user_{{$user['id']}}">{{$user['name']}}</option>
                                 @endforeach

@@ -1,3 +1,5 @@
+
+
 let buttons = document.querySelectorAll('.addTask');
 buttons.forEach(function(button) {
     button.addEventListener('click', function(event) {
@@ -11,11 +13,11 @@ buttons.forEach(function(button) {
         console.log(button.parentElement.id);
         let modal_board_id = document.getElementById("modal_board_id");
         let modal_owner_id = document.getElementById("modal_owner_id");
-        let modal_worker_id = document.getElementById("modal_worker_id");
+        //let modal_worker_id = document.getElementById("modal_worker_id");
 
         modal_board_id.value = event.target.id;
         modal_owner_id.value = localStorage.getItem("uid");
-        modal_worker_id.value = 1;
+
 
         var myModal = new bootstrap.Modal(modal);
 
@@ -69,10 +71,10 @@ saveTask.addEventListener("click", ()=>{
 
             ShowNotify("Менеджер задач", "Сохраняем и обновляем", 'success');
             //
-            // setTimeout(function() {
-            //     // Перезагрузить текущую страницу
-            //     location.reload();
-            // }, 500);
+            setTimeout(function() {
+                // Перезагрузить текущую страницу
+                location.reload();
+            }, 500);
 
 
 

@@ -25,7 +25,8 @@ class UserController
                 'login'=>$res['login'],
                 'name'=>$res['name'],
                 'type'=>'access',
-                'user_id'=>$res['id']
+                'user_id'=>$res['id'],
+                'role'=>$res['role']
 
             ];
             $ref = [
@@ -34,7 +35,10 @@ class UserController
             ];
             $token_acc = JWT::encode($access, $key, 'HS256');
             $token_ref = JWT::encode($ref, $key, 'HS256');
-
+            session_start();
+            $_SESSION['uid'] = $res['id'];
+            $_SESSION['role'] = $res['role'];
+            $_SESSION['auth'] = true;
 
             echo json_encode([
                 "status"=>"ok",
