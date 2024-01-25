@@ -5,18 +5,6 @@ use  \RedBeanPHP as rb;
 
 class UserModel
 {
-
-    protected $usersdb;
-
-
-    public function __construct()
-    {
-
-        rb\R::dispense('users');
-
-    }
-
-
     public function addUser($login, $pass, $name, $role, $dep)
     {
         $userDb = rb\R::dispense('users');
@@ -26,9 +14,6 @@ class UserModel
         $userDb->role = $role;
         $userDb->department = $dep;
 
-
-
-        ;
         try{
             rb\R::store($userDb);
             echo json_encode(['status'=>"ok"]);
@@ -46,8 +31,7 @@ class UserModel
      */
     public function getUser($login, $pass)
     {
-         return rb\R::findOne('users', 'login = ? AND pass = ? ', [$login,$pass]);
-
+         return rb\R::findOne('users', 'login = ? AND pass = ? ', [$login, $pass]);
     }
 
     public function getAllusers() {
