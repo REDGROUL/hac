@@ -7,15 +7,7 @@ Route::add('/', function() use ($blade){
     echo $blade->make('auth',['title'=>'Авторизация', 'navbar_show'=>false])->render();
 }, 'get');
 
-
-Route::add('/main', function () use ($blade){
-    echo $blade->make('main', ['navbar_show'=>true])->render();
-}, 'get');
-
-
 Route::add('/tasks', function () use ($blade){
-
-
     if($_SESSION['auth']) {
         $taskModel = new \App\Models\TasksModel();
         $boards = $taskModel->getAllBoard();
@@ -94,33 +86,33 @@ Route::add('/task/([0-9-]*)', function ($id) use ($blade) {
 },'get');
 
 
-Route::add('/task/([0-9-]*)', function ($id) use ($blade) {
-    if($_SESSION['auth']) {
-        $tm = new \App\Models\TasksModel();
-        $data = $tm->getTaskById($id);
-        $tasksStatModel = new \App\Models\TaskStatusModel();
-        $stats = $tasksStatModel->getStatusById($data['status']);
-        $data['status'] = $stats['name'];
-
-        $data['status'] = [
-            "name" => $stats['name'],
-            "color" => $stats['color']
-        ];
-        $cm = new \App\Models\CommentsModel();
-        $comments = $cm->getCommentsByTaskId($id);
-
-        $um = new \App\Models\UserModel();
-        $userDataForComments = [];
-        foreach ($comments as $comment) {
-            $comment['user_data'] = $um->getUserById($comment['user_id']);
-        }
-    } else {
-        header('Location: /');
-    }
-
-
-    echo $blade->make('taskDetail', ['title'=>'Задача','navbar_show'=>true, 'currentTask'=>$data, 'comments'=>$comments])->render();
-},'get');
+//Route::add('/task/([0-9-]*)', function ($id) use ($blade) {
+//    if($_SESSION['auth']) {
+//        $tm = new \App\Models\TasksModel();
+//        $data = $tm->getTaskById($id);
+//        $tasksStatModel = new \App\Models\TaskStatusModel();
+//        $stats = $tasksStatModel->getStatusById($data['status']);
+//        $data['status'] = $stats['name'];
+//
+//        $data['status'] = [
+//            "name" => $stats['name'],
+//            "color" => $stats['color']
+//        ];
+//        $cm = new \App\Models\CommentsModel();
+//        $comments = $cm->getCommentsByTaskId($id);
+//
+//        $um = new \App\Models\UserModel();
+//        $userDataForComments = [];
+//        foreach ($comments as $comment) {
+//            $comment['user_data'] = $um->getUserById($comment['user_id']);
+//        }
+//    } else {
+//        header('Location: /');
+//    }
+//
+//
+//    echo $blade->make('taskDetail', ['title'=>'Задача','navbar_show'=>true, 'currentTask'=>$data, 'comments'=>$comments])->render();
+//},'get');
 
 
 

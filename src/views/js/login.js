@@ -3,11 +3,8 @@
 let loginbtn = document.getElementById('login');
 loginbtn.addEventListener("click", ()=> {
     const form = document.getElementById('loginForm');
-
     const login = document.getElementById('loginUsername').value;
     const pass = document.getElementById('loginPassword').value;
-
-
     console.log("click")
     let resp = JSON.stringify({
         "type":"auth",
@@ -39,15 +36,4 @@ loginbtn.addEventListener("click", ()=> {
             ShowNotify("Ошибка", error, 'alert');
         })
 
-
-
-
 })
-
-
-
-
-function f() {
-
-
-}
