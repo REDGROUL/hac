@@ -1,5 +1,4 @@
 <?
-$css = $_SERVER['SERVER_NAME'].'/src/views/css/style.css';
 session_start();
 ?>
 
@@ -7,9 +6,9 @@ session_start();
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?=$css?>">
     <link rel="stylesheet" href="../src/views/css/bootstrap.css">
     <link rel="stylesheet" href="../src/views/css/style.css">
 
@@ -21,7 +20,7 @@ session_start();
 </head>
 <body>
 
-<?if(@$navbar_show != false){?>
+@if($navbar_show != false)
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container">
@@ -42,15 +41,10 @@ session_start();
                         Личные данные
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" id="userProfileLink">Профиль пользователя</a></li>
+                        <li><a class="dropdown-item" href="/profile/{{$_SESSION['uid']}}" id="userProfileLink">Профиль пользователя</a></li>
                         <li><a class="dropdown-item" href="/logout">Выход</a></li>
                     </ul>
                 </li>
-
-
-    <?
-
-                ?>
                 @if($_SESSION['role'] == '1')
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -67,9 +61,4 @@ session_start();
         </div>
     </div>
 </nav>
-
-<script>
-    let elem = document.getElementById("userProfileLink");
-    elem.href = '/profile/'+localStorage.getItem("uid");
-    </script>
-<?}?>
+@endif
