@@ -1,13 +1,5 @@
 @include('header')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dragula@3.7.3/dist/dragula.min.css">
-<style>
-
-
-
-
-
-</style>
-<script src="../src/views/js/auth.js"></script>
+<link rel="stylesheet" href="../src/views/css/dragula.min.css">
 <?
 $dm = new \App\Models\DepartmentModel();
 $departs = $dm->getAllDerartments();
@@ -22,10 +14,6 @@ $departs = $dm->getAllDerartments();
                     Выбор отдела
                 </h3>
             </div>
-
-
-
-
 
             <div class="card-body">
 
@@ -141,17 +129,6 @@ $departs = $dm->getAllDerartments();
                         <input hidden name = "owner_id" id="modal_owner_id">
 
 
-                        <?
-
-                        ?>
-
-
-{{--                        @if(isset($curent_dep))--}}
-{{--                        <input  name = "dep_id" id="dep_id" value="{{$curent_dep}}">--}}
-{{--                        @else--}}
-{{--                            <input  name = "dep_id" id="dep_id" value="{{$_SESSION['dep']}}">--}}
-{{--                        @endif--}}
-
                         <div class="mb-3">
                             <label for="title" class="form-label">Название</label>
                             <input type="text" name="name" class="form-control" id="title" placeholder="Введите название">
@@ -173,6 +150,7 @@ $departs = $dm->getAllDerartments();
                         <div class="mb-3">
                             <label for="worker" class="form-label">Ответственный за выполнение</label>
                             <select class="form-select" name="worker_id" id="worker" aria-label="Выберите язык">
+                                <option value="">Нужно выбрать отдел</option>
 {{--                                @foreach($users as $user)--}}
 {{--                                    <option value="user_{{$user['id']}}">{{$user['name']}}</option>--}}
 {{--                                @endforeach--}}
@@ -215,7 +193,7 @@ $departs = $dm->getAllDerartments();
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/dragula@3.7.3/dist/dragula.min.js"></script>
+<script src="../src/views/js/dragula.min.js"></script>
 <script>
 
 
@@ -237,13 +215,12 @@ $departs = $dm->getAllDerartments();
             "kanban_id": el.parentElement.id
         });
         ShowNotify("Менеджер задач", "Меняем статус задачи");
-        notificationSound.play();
+
         fetch('/tasks/changeStatus', {
             method: 'POST',
             body: resp,
 
         })
-
             .then(response => response.text())
 
             .then(data => {
@@ -264,8 +241,8 @@ $departs = $dm->getAllDerartments();
     let dep_id = document.getElementById("dep_id");
 
     dep_id.addEventListener('change', ()=>{
-///getUserByDep/
-        workerlist.innerHTML = '';
+        workerlist.innerHTML = `\`<option value="" selected>Загружаем выбранный отдел</option>\``;
+
 
        // ShowNotify("Менеджер задач", "Меняем статус задачи");
         ShowNotify("Менеджер пользователей", "Получаем данные по отделу", 'warning')
@@ -274,7 +251,7 @@ $departs = $dm->getAllDerartments();
             .then(response => response.json())
 
             .then(data => {
-
+                workerlist.innerHTML = '';
                 let dt = Object.keys(data)
                 console.log(dt);
                 dt.forEach((usr)=>{
