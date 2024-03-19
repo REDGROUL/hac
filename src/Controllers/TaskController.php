@@ -2,10 +2,19 @@
 
 
 namespace App\Controllers;
+use App\Models\TasksModel;
 use  \RedBeanPHP as rb;
 
 class TaskController extends BaseController
 {
+    private TasksModel $taskModel;
+
+    function __construct()
+    {
+        $this->taskModel = new TasksModel();
+    }
+
+
     public function changeStatus() {
 
         $data = $this->getInput();
@@ -20,7 +29,6 @@ class TaskController extends BaseController
                "message"=>"task status updated"
            ]
         ]);
-
 
     }
 
@@ -67,7 +75,10 @@ class TaskController extends BaseController
             return json_encode($e->getMessage());
         }
 
+    }
 
+    public function delTaskById($id) {
+        return json_encode($this->taskModel->delTaskById($id));
     }
 
 

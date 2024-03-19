@@ -4,9 +4,7 @@ use App\Controllers\BoardsController;
 use App\Controllers\CommentController;
 use App\Controllers\TaskController;
 use App\Controllers\UserController;
-use App\Models\CommentsModel;
 use App\Models\DepartmentModel;
-use App\Models\kanbanModel;
 use App\Models\TasksModel;
 use App\Models\UserModel;
 use Steampixel\Route;
@@ -37,15 +35,13 @@ Route::add('/addBoard', function (){
 }, 'post');
 
 Route::add('/delboard', function (){
-    $json = json_decode(file_get_contents("php://input"), true);
-    $tc = new kanbanModel();
-    $tc->delBoard($json);
+    $boardController = new BoardsController();
+    echo $boardController->delBoard();
 }, 'post');
 
-Route::add('/deltask', function (){
-    $json = json_decode(file_get_contents("php://input"), true);
-    $tc = new TasksModel();
-    $tc->delTaskById($json['id']);
+Route::add('/delTask/([0-9-]*)', function ($id){
+    $tc = new TaskController();
+    echo $tc->delTaskById($id);
 }, 'post');
 
 Route::add('/addUser', function (){

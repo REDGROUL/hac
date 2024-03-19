@@ -446,15 +446,8 @@
 
         let id = document.getElementById("task_id").value;
 
-
-        let resp = JSON.stringify({
-            "type": "deltask",
-            "id": id
-        });
-        fetch('/deltask', {
-            method: 'POST',
-            body: resp,
-
+        fetch('/delTask/'+id, {
+            method: 'POST'
         })
 
             .then(response => response.json())

@@ -28,8 +28,6 @@ class TasksModel {
     }
 
 
-
-
     public function getTaskById($id) {
         return  rb\R::load('tasks', $id);
     }
@@ -44,9 +42,7 @@ class TasksModel {
         $record = rb\R::load('tasks', $id); // Загрузка записи по id из таблицы
         rb\R::trash($record);
 
-
-
-        echo json_encode([
+        return json_encode([
             "status"=>"ok",
         ]);
     }

@@ -19,4 +19,11 @@ class BoardsController extends BaseController
         $json = $this->getInput();
         return $this->kanbanModel->addBoard($json);
     }
+    public function getAllBoards() {
+        return $this->kanbanModel->getAllBoards();
+    }
+    public function delBoard() {
+        $json = $this->getInput();
+        return $this->kanbanModel->delBoard($json);
+    }
 }

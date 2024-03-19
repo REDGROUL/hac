@@ -9,7 +9,7 @@ class kanbanModel
 {
 
     public function getAllBoards() {
-        return  rb\R::findAll('kanban');
+        return rb\R::findAll('kanban');
     }
 
     public function addBoard($data) {
