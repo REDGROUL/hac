@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\BoardsController;
 use App\Controllers\CommentController;
 use App\Controllers\TaskController;
 use App\Controllers\UserController;
@@ -31,12 +32,8 @@ Route::add('/addNewComment', function (){
 }, 'post');
 
 Route::add('/addBoard', function (){
-    $json = json_decode(file_get_contents("php://input"), true);
-    if(!empty($json) && $json['type'] == 'addBoard')
-    {
-        $tc = new kanbanModel();
-        $tc->addBoard($json);
-    }
+    $boardController = new BoardsController();
+    echo $boardController->addBoard();
 }, 'post');
 
 Route::add('/delboard', function (){

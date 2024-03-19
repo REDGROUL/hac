@@ -20,12 +20,17 @@ class kanbanModel
         $db->description = $data['descr'];
 
 
-        rb\R::store($db);
+        try {
+            rb\R::store($db);
+            return json_encode([
+                "status"=>"saved",
+                "name" => $data['name']
+            ]);
+        } catch (rb\RedException\SQL $e) {
+            return $e->getMessage();
+        }
 
-        echo json_encode([
-            "status"=>"saved",
-            "name" => $data['name']
-        ]);
+
     }
 
 
