@@ -1,18 +1,26 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\UserModel;
 use App\Models\UserModel as um;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 
-class UserController
+class UserController extends BaseController
 {
-    public function login($json)
-    {
-        $um = new um();
 
-        $res = $um->getUser($json['login'], $json['pass']);
+    private UserModel $userModel;
+
+    function __construct() {
+        $this->userModel = new UserModel();
+    }
+
+    public function login()
+    {
+        $json = $this->getInput();
+
+        $res = $this->userModel->getUser($json['login'], $json['pass']);
 
         if(!empty($res))
         {

@@ -9,9 +9,9 @@ use App\Models\UserModel;
 use Steampixel\Route;
 
 Route::add('/login', function (){
-    $json = json_decode(file_get_contents("php://input"), true);
+
     $uc = new UserController();
-    echo $uc->login($json);
+    echo $uc->login();
 }, 'post');
 
 Route::add('/tasks/changeStatus', function (){
