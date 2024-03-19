@@ -1,4 +1,6 @@
 <?php
+
+use App\Controllers\CommentController;
 use App\Controllers\TaskController;
 use App\Controllers\UserController;
 use App\Models\CommentsModel;
@@ -9,44 +11,23 @@ use App\Models\UserModel;
 use Steampixel\Route;
 
 Route::add('/login', function (){
-
     $uc = new UserController();
     echo $uc->login();
 }, 'post');
 
 Route::add('/tasks/changeStatus', function (){
-    $json = json_decode(file_get_contents("php://input"), true);
     $tc = new TaskController();
-    echo $tc->changeStatus($json);
+    echo $tc->changeStatus();
 }, 'post');
-
 
 Route::add('/tasks/newTask', function (){
     $tc = new TaskController();
-
-    echo json_encode($_FILES);
-    if(($_FILES['file']['size'] > 0)) {
-        $uploaddir = 'res/images/';
-        $uploadfile = $uploaddir . basename($_FILES['file']['name']);
-
-
-        if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
-            $_POST['photo'] = $uploadfile;
-
-            $tc->newTask($_POST);
-        }
-    } else {
-        $_POST['photo'] = "res/images/noimage.jpg";
-        $tc->newTask($_POST);
-    }
-
-
+    echo $tc->newTask();
 }, 'post');
 
 Route::add('/addNewComment', function (){
-    $json = json_decode(file_get_contents("php://input"), true);
-    $tc = new CommentsModel();
-    return $tc->addNewComment($json);
+    $CommentContr = new CommentController();
+    echo $CommentContr->addNewComment();
 }, 'post');
 
 Route::add('/addBoard', function (){

@@ -4,13 +4,11 @@
 namespace App\Controllers;
 use  \RedBeanPHP as rb;
 
-class TaskController
+class TaskController extends BaseController
 {
-    public function changeStatus($data) {
+    public function changeStatus() {
 
-
-      //  rb\R::setup( 'mysql:host=localhost;dbname=kittyFrame','root', '' );
-        $taskDb = rb\R::dispense('tasks');
+        $data = $this->getInput();
 
         $currentTask = rb\R::load('tasks', $data['taskId']);
         $currentTask->kanban_id = $data['kanban_id'];
@@ -26,32 +24,50 @@ class TaskController
 
     }
 
-    public function newTask($data) {
+    public function newTask() {
+
+        if(!($_FILES['file']['size'] > 0)) {
+            $_POST['photo'] = "res/images/noimage.jpg";
+        }
+
+        $uploaddir = 'res/images/';
+        $uploadfile = $uploaddir . basename($_FILES['file']['name']);
+
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+            $_POST['photo'] = $uploadfile;
+        }
+
+
         $taskDb = rb\R::dispense('tasks');
-        $kanban_id = explode("_",$data['kanban_id']);
-        $worker_id = explode("_",$data['worker_id']);
-        $taskDb->name = $data['name'];
-        $taskDb->description = $data['description'];
-        $taskDb->owner_id = $data['owner_id'];
+        $kanban_id = explode("_",$_POST['kanban_id']);
+        $worker_id = explode("_",$_POST['worker_id']);
+        $taskDb->name = $_POST['name'];
+        $taskDb->description = $_POST['description'];
+        $taskDb->owner_id = $_POST['owner_id'];
         $taskDb->worker_id = end($worker_id);
         $taskDb->kanban_id = end($kanban_id);
-        $taskDb->date = $data['date'];
-        $taskDb->status = $data['status'];
-        $taskDb->task_photo = $data['photo'];
+        $taskDb->date = $_POST['date'];
+        $taskDb->status = $_POST['status'];
+        $taskDb->task_photo = $_POST['photo'];
         $taskDb->date_open = date("Y-m-d H:i");
-        $taskDb->dep_id = $data['dep_id'];
+        $taskDb->dep_id = $_POST['dep_id'];
 
 
-        rb\R::store($taskDb);
+        try {
+            rb\R::store($taskDb);
+            return json_encode([
+                "status"=>"saved",
+                "payload"=>[
+                    "name"=>$_POST['name'],
+                    "description"=>$_POST['description'],
+                    "kanban_id"=>end($kanban_id)
+                ]
+            ]);
+        } catch (rb\RedException\SQL $e) {
+            return json_encode($e->getMessage());
+        }
 
-        echo json_encode([
-            "status"=>"saved",
-            "payload"=>[
-                "name"=>$data['name'],
-                "description"=>$data['description'],
-                "kanban_id"=>end($kanban_id)
-            ]
-        ]);
+
     }
 
 

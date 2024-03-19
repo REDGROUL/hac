@@ -10,8 +10,6 @@ class CommentsModel
 
     public function getCommentsByTaskId($id)
     {
-
-        //SELECT * FROM users JOIN comments ON comments.user_id = users.id;
         return rb\R::find('comments', 'task_id = ?', [$id]);
     }
 
@@ -24,15 +22,20 @@ class CommentsModel
         $taskDb->text = $data['text'];
         $taskDb->date =  date('Y-m-d H:i:s');
 
-        rb\R::store($taskDb);
+        try {
+            rb\R::store($taskDb);
+            return json_encode([
+                "status"=>"saved",
+                "payload"=>[
+                    "user_id"=>$data['user_id'],
+                    "text"=>$data['text'],
+                    "task_id"=>$data['task_id']
+                ]
+            ]);
+        } catch (rb\RedException\SQL $e) {
+            return $e->getMessage();
+        }
 
-        return json_encode([
-            "status"=>"saved",
-            "payload"=>[
-                "user_id"=>$data['user_id'],
-                "text"=>$data['text'],
-                "task_id"=>$data['task_id']
-            ]
-        ]);
+
     }
 }

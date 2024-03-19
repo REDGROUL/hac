@@ -58,27 +58,28 @@ Route::add('/tasks/([0-9-]*)', function ($dep_id) use ($blade){
 });
 
 Route::add('/task/([0-9-]*)', function ($id) use ($blade) {
-    if($_SESSION['auth']) {
-        $tm = new \App\Models\TasksModel();
-        $data = $tm->getTaskById($id);
-        $tasksStatModel = new \App\Models\TaskStatusModel();
-        $stats = $tasksStatModel->getStatusById($data['status']);
-        $data['status'] = $stats['name'];
-
-        $data['status'] = [
-            "name" => $stats['name'],
-            "color" => $stats['color']
-        ];
-        $cm = new \App\Models\CommentsModel();
-        $comments = $cm->getCommentsByTaskId($id);
-
-        $um = new \App\Models\UserModel();
-        $userDataForComments = [];
-        foreach ($comments as $comment) {
-            $comment['user_data'] = $um->getUserById($comment['user_id']);
-        }
-    } else {
+    if(!$_SESSION['auth']) {
         header('Location: /');
+
+    }
+    $tm = new \App\Models\TasksModel();
+    $data = $tm->getTaskById($id);
+    $tasksStatModel = new \App\Models\TaskStatusModel();
+    $stats = $tasksStatModel->getStatusById($data['status']);
+    $data['status'] = $stats['name'];
+
+    $data['status'] = [
+        "name" => $stats['name'],
+        "color" => $stats['color']
+    ];
+    $cm = new \App\Models\CommentsModel();
+    $comments = $cm->getCommentsByTaskId($id);
+
+    var_dump($comments);
+    $um = new \App\Models\UserModel();
+    $userDataForComments = [];
+    foreach ($comments as $comment) {
+        $comment['user_data'] = $um->getUserById($comment['user_id']);
     }
 
 
