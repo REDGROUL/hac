@@ -26,7 +26,7 @@ class CommentsModel
 
         rb\R::store($taskDb);
 
-        echo json_encode([
+        return json_encode([
             "status"=>"saved",
             "payload"=>[
                 "user_id"=>$data['user_id'],

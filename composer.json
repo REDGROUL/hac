@@ -7,7 +7,8 @@
         "jenssegers/blade": "^1.4",
         "gabordemooij/redbean": "dev-master",
         "firebase/php-jwt": "^6.9",
-        "workerman/workerman": "^4.1"
+        "workerman/workerman": "^4.1",
+      "ext-json": "*"
     },
     "license": "GNU GPL 2.0+",
     "autoload": {
