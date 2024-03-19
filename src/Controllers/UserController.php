@@ -41,7 +41,7 @@ class UserController
             $_SESSION['auth'] = true;
             $_SESSION['dep'] = $res['department'];
 
-            echo json_encode([
+            return json_encode([
                 "status"=>"ok",
                 'access'=>$token_acc,
                 'refresh'=>$token_ref
@@ -50,7 +50,7 @@ class UserController
         }
         else
         {
-            echo json_encode([
+            return json_encode([
                 "status"=>"user not found"
             ]);
         }

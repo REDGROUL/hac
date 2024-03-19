@@ -4,18 +4,8 @@ use Steampixel\Route;
 Route::add('/login', function (){
 
     $json = json_decode(file_get_contents("php://input"), true);
-    if(!empty($json) && $json['type'] == 'auth')
-    {
-        $uc = new \App\Controllers\UserController();
-        $uc->login($json);
-
-    }
-    else
-    {
-        echo json_encode([
-            "Message from api"=>"yo wtf?"
-        ]);
-    }
+    $uc = new \App\Controllers\UserController();
+    echo $uc->login($json);
 
 }, 'post');
 
