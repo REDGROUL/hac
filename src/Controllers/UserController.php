@@ -12,15 +12,18 @@ class UserController extends BaseController
 
     private UserModel $userModel;
 
-    function __construct() {
+    function __construct()
+    {
         $this->userModel = new UserModel();
     }
+
 
     public function login()
     {
         $json = $this->getInput();
+        $um = new um();
 
-        $res = $this->userModel->getUser($json['login'], $json['pass']);
+        $res = $um->getUser($json['login'], $json['pass']);
 
         if(!empty($res))
         {
