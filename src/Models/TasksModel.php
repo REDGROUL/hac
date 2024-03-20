@@ -57,9 +57,10 @@ class TasksModel {
         try {
 
             rb\R::store($currentTask);
-            echo json_encode(["status"=>"ok"]);
+            return json_encode(["status"=>"ok"]);
         } catch (\Exception $e) {
-            echo json_encode(["status"=>"bad"]);
+            echo $e->getMessage();
+            return json_encode(["status"=>"bad"]);
 
         }
 

@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\DepartmentModel;
 use App\Models\UserModel;
 use App\Models\UserModel as um;
 use Firebase\JWT\JWT;
@@ -11,6 +12,7 @@ class UserController extends BaseController
 {
 
     private UserModel $userModel;
+
 
     function __construct()
     {
@@ -70,7 +72,10 @@ class UserController extends BaseController
 
     public function addUser() {
         $data = $this->getInput();
-
         return $this->userModel->addUser($data);
+    }
+
+    public function getUserByDepId($id) {
+        return $this->userModel->getUserByDepId($id);
     }
 }

@@ -43,7 +43,7 @@ class UserModel
     }
 
     public function getUserByDepId($id) {
-        return rb\R::findAll('users', 'department = ?', [$id]);
+        return json_encode(rb\R::findAll('users', 'department = ?', [$id]));
     }
 
 

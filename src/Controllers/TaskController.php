@@ -9,6 +9,7 @@ class TaskController extends BaseController
 {
     private TasksModel $taskModel;
 
+
     function __construct()
     {
         $this->taskModel = new TasksModel();
@@ -79,6 +80,12 @@ class TaskController extends BaseController
 
     public function delTaskById($id) {
         return json_encode($this->taskModel->delTaskById($id));
+    }
+
+    public function updateTask() {
+        $data = $this->getInput();
+        echo json_encode($data);
+        return $this->taskModel->updateTask($data);
     }
 
 
