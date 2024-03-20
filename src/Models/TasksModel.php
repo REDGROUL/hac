@@ -1,14 +1,10 @@
 <?php
 namespace App\Models;
+use App\Controllers\BaseAuth;
 use  \RedBeanPHP as rb;
 
 class TasksModel {
 
-    private $database;
-//    public function __construct()
-//    {
-//        rb\R::setup('mysql:host=localhost;dbname=KittyFrame', 'root', '');
-//    }
 
     public function getAllBoard() {
 
