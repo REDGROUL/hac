@@ -17,17 +17,12 @@ class DepartmentModel {
         $depDB = rb\R::dispense('department');
 
         $depDB->name = $data['name'];
-
-
-
-
-        ;
         try{
             rb\R::store($depDB);
-            echo json_encode(['status'=>"ok"]);
+            return json_encode(['status'=>"ok"]);
 
         } catch (\Exception $e) {
-            echo json_encode(['status'=>"bad"]);
+            return json_encode(['status'=>"bad"]);
         }
     }
 }
