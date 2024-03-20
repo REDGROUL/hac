@@ -5,21 +5,21 @@ use  \RedBeanPHP as rb;
 
 class UserModel
 {
-    public function addUser($login, $pass, $name, $role, $dep)
+    public function addUser($data)
     {
         $userDb = rb\R::dispense('users');
-        $userDb->login = $login;
-        $userDb->pass = $pass;
-        $userDb->name = $name;
-        $userDb->role = $role;
-        $userDb->department = $dep;
+        $userDb->login = $data['login'];
+        $userDb->pass = $data['password'];
+        $userDb->name = $data['name'];
+        $userDb->role = $data['role'];
+        $userDb->department = $data['dep'];
 
         try{
             rb\R::store($userDb);
-            echo json_encode(['status'=>"ok"]);
+            return json_encode(['status'=>"ok"]);
 
         } catch (\Exception $e) {
-            echo json_encode(['status'=>"bad"]);
+            return json_encode(['status'=>"bad"]);
         }
 
     }

@@ -67,4 +67,10 @@ class UserController extends BaseController
         }
 
     }
+
+    public function addUser() {
+        $data = $this->getInput();
+
+        return $this->userModel->addUser($data);
+    }
 }
