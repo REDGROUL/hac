@@ -1,12 +1,9 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\DepartmentModel;
 use App\Models\UserModel;
 use App\Models\TasksModel;
-use App\Models\UserModel as um;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use Jenssegers\Blade\Blade;
 
 
