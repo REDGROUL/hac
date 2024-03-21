@@ -2,17 +2,22 @@
 
 
 namespace App\Controllers;
+use App\Models\CommentsModel;
 use App\Models\TasksModel;
+use Jenssegers\Blade\Blade;
 use  \RedBeanPHP as rb;
 
 class TaskController extends BaseController
 {
     private TasksModel $taskModel;
-
+    private CommentsModel $commentModel;
+    private Blade $blade;
 
     function __construct()
     {
         $this->taskModel = new TasksModel();
+        $this->commentModel = new CommentsModel();
+        $this->blade = new Blade('src/views','src/cache');
     }
 
 
@@ -93,5 +98,47 @@ class TaskController extends BaseController
     }
 
 
+    public function getPrepareTasks() {
+        $taskModel = new \App\Models\TasksModel();
+        $boards = $taskModel->getAllBoard();
+        $tasks = $taskModel->getAllTasksByDepartmentAndUseId($_SESSION['dep'], $_SESSION['uid']);
+        $tasksStatModel = new \App\Models\TaskStatusModel();
+        $stats = $tasksStatModel->getAllStatuses();
+        foreach ($tasks as $task) {
+            $task['status'] = [
+                "name" => $stats[$task['status']]['name'],
+                "color" =>$stats[$task['status']]['color'],
+            ];
+        }
 
+
+        $um = new \App\Models\UserModel() ;
+        $users = $um->getAllusers();
+        return $this->blade->make('tasks', ['title'=>'Задачи','navbar_show'=>true, 'boards'=>$boards, 'tasks'=>$tasks, 'users'=>$users, 'statuses'=>$stats])->render();
+    }
+
+    public function getDetailTask($id) {
+        $data = $this->getTask($id)[0];
+        $comments = $this->commentModel->getCommentsByTaskId($data[0]['id']);
+        return $this->blade->make('taskDetail', ['title'=>'Задача','navbar_show'=>true, 'task'=>$data])->render();
+    }
+
+    public function getPrepareKanbanById($dep_id) {
+        $taskModel = new TasksModel();
+        $boards = $taskModel->getAllBoard();
+        $tasks = $taskModel->getAllTasksByDepartment($dep_id);
+        $tasksStatModel = new \App\Models\TaskStatusModel();
+        $stats = $tasksStatModel->getAllStatuses();
+        foreach ($tasks as $task) {
+            $task['status'] = [
+                "name" => $stats[$task['status']]['name'],
+                "color" =>$stats[$task['status']]['color'],
+            ];
+        }
+
+
+        $um = new \App\Models\UserModel() ;
+        $users = $um->getAllusers();
+        return $this->blade->make('tasks', ['title'=>'Задачи','navbar_show'=>true, 'boards'=>$boards, 'tasks'=>$tasks, 'users'=>$users, 'statuses'=>$stats, 'curent_dep'=>$dep_id])->render();
+    }
 }

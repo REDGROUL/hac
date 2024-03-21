@@ -5,6 +5,7 @@ use  \RedBeanPHP as rb;
 
 class UserModel
 {
+
     public function addUser($data)
     {
         $userDb = rb\R::dispense('users');
@@ -44,6 +45,14 @@ class UserModel
 
     public function getUserByDepId($id) {
         return json_encode(rb\R::findAll('users', 'department = ?', [$id]));
+    }
+
+    public function getPrepareUserAndTaskByUserId($id) {
+        $um = new \App\Models\UserModel();
+        $currentUser = $um->getUserById($id);
+        $tm = new \App\Models\TasksModel();
+        $tasks = $tm->getTaskByUserId($id);
+        echo $blade->make('profile', ['title'=>'Профиль','navbar_show'=>true, 'userData'=>$currentUser, 'tasks'=>$tasks])->render();
     }
 
 

@@ -251,16 +251,17 @@
                     <?
                     $dm = new \App\Models\DepartmentModel();
                     $departs = $dm->getAllDerartments();
+                    var_dump($departs);
                     ?>
                     <div class="mb-3">
                         <label for="worker" class="form-label">Отдел</label>
                         <select class="form-select" name="dep_id" id="dep_id" aria-label="Выберите язык">
                             <option value="0" selected>Выберите отдел</option>
                             <option value="{{$departs[$user2['department']]['id']}}"
-                                    selected>{{$departs[$user2['department']]['name']}} (Текущий)
+                                    selected>{{$departs[$user2['department']]['dep_name']}} (Текущий)
                             </option>
                             @foreach($departs as $dep)
-                                <option value="{{$dep['id']}}">{{$dep['name']}}</option>
+                                <option value="{{$dep['id']}}">{{$dep['dep_name']}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -331,7 +332,7 @@
 
         })
 
-            .then(response => response.json())
+            .then(response => response.text())
 
             .then(data => {
 

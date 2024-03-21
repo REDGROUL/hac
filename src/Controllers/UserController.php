@@ -3,20 +3,25 @@ namespace App\Controllers;
 
 use App\Models\DepartmentModel;
 use App\Models\UserModel;
+use App\Models\TasksModel;
 use App\Models\UserModel as um;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Jenssegers\Blade\Blade;
 
 
 class UserController extends BaseController
 {
 
     private UserModel $userModel;
-
+    private TasksModel $taskMode;
+    private Blade $blade;
 
     function __construct()
     {
         $this->userModel = new UserModel();
+        $this->taskMode = new TasksModel();
+        $this->blade = new Blade('src/views','src/cache');
     }
 
 
@@ -77,5 +82,19 @@ class UserController extends BaseController
 
     public function getUserByDepId($id) {
         return $this->userModel->getUserByDepId($id);
+    }
+
+    public function getDataProfile($id) {
+        $currentUser = $this->userModel->getUserById($id);
+        $tasks = $this->taskMode->getTaskByUserId($id);
+        return $this->blade->make('profile', ['title'=>'Профиль','navbar_show'=>true, 'userData'=>$currentUser, 'tasks'=>$tasks])->render();
+    }
+
+    public function getPrepareLogin(){
+        return $this->blade->make('auth',['title'=>'Авторизация', 'navbar_show'=>false])->render();
+    }
+
+    public function getPrepareNewUser(){
+        return $this->blade->make('reg', ['title'=>'Регистрация','navbar_show'=>true])->render();
     }
 }

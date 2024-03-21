@@ -6,7 +6,7 @@ use App\Controllers\DepartmentController;
 use App\Controllers\TaskController;
 use App\Controllers\UserController;
 use Steampixel\Route;
-
+Route::add('/tasks/([0-9-]*)', fn($id)=>(new TaskController())->getTask($id));
 if(isset($_SESSION['auth'])) {
 
     Route::add('/tasks/changeStatus', fn()=>(new TaskController())->changeStatus(), 'post');

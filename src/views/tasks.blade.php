@@ -3,7 +3,7 @@
 <?
 $dm = new \App\Models\DepartmentModel();
 $departs = $dm->getAllDerartments();
-
+var_dump($_SESSION);
 
 ?>
 <div class="container py-5">
@@ -21,7 +21,7 @@ $departs = $dm->getAllDerartments();
 
                 <ul class="list-group">
                     @foreach($departs as $dep)
-                    <li class="list-group-item"><a href="/tasks/{{$dep['id']}}">{{$dep['name']}}</a></li>
+                    <li class="list-group-item"><a href="/tasks/{{$dep['id']}}">{{$dep['dep_name']}}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -34,9 +34,9 @@ $departs = $dm->getAllDerartments();
                 <h3 class="card-title h5 mb-1">
 
                     @if(isset($curent_dep))
-                    {{$departs[$curent_dep]['name']}}
+                    {{$departs[$curent_dep]['dep_name']}}
                     @else
-                    {{$departs[$_SESSION['dep']]['name']}}
+                    {{$departs[$_SESSION['dep']]['dep_name']}}
                     @endif
                 </h3>
             </div>
@@ -160,7 +160,7 @@ $departs = $dm->getAllDerartments();
                         <div class="mb-3">
                             <label for="date"  class="form-label">Число и время сдачи</label>
                             <input type="datetime-local" name="date" class="form-control" id="date" rows="3"
-                                   placeholder="Введите описание"></input>
+                                   placeholder="Введите описание"/>
                         </div>
 
                         <div class="mb-3">
