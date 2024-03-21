@@ -20,4 +20,8 @@ class DepartmentController extends BaseController
         return $this->dep->createDep($data);
     }
 
+    public function getDepartmentNameById($id) {
+        return json_encode($this->dep->getDepartmentNameById($id));
+    }
+
 }
