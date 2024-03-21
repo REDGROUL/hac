@@ -88,6 +88,10 @@ class TaskController extends BaseController
         return $this->taskModel->updateTask($data);
     }
 
+    public function getTask($id) {
+        return $this->taskModel->getTask($id);
+    }
+
 
 
 }

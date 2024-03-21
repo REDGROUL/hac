@@ -50,28 +50,18 @@ if(isset($_SESSION['auth'])) {
     });
 
     Route::add('/task/([0-9-]*)', function ($id) use ($blade) {
-        $tm = new \App\Models\TasksModel();
-        $data = $tm->getTaskById($id);
-        $tasksStatModel = new \App\Models\TaskStatusModel();
-        $stats = $tasksStatModel->getStatusById($data['status']);
-        $data['status'] = $stats['name'];
+        $tc = new \App\Controllers\TaskController();
+        $data = $tc->getTask($id);
 
-        $data['status'] = [
-            "name" => $stats['name'],
-            "color" => $stats['color']
-        ];
+
+
         $cm = new \App\Models\CommentsModel();
-        $comments = $cm->getCommentsByTaskId($id);
-
-        var_dump($comments);
-        $um = new \App\Models\UserModel();
-        $userDataForComments = [];
-        foreach ($comments as $comment) {
-            $comment['user_data'] = $um->getUserById($comment['user_id']);
-        }
+        $comments = $cm->getCommentsByTaskId($data[0]['id']);
 
 
-        echo $blade->make('taskDetail', ['title'=>'Задача','navbar_show'=>true, 'currentTask'=>$data, 'comments'=>$comments])->render();
+
+
+        echo $blade->make('taskDetail', ['title'=>'Задача','navbar_show'=>true, 'task'=>$data[0]])->render();
     },'get');
 
     Route::add('/ref', function () use ($blade){

@@ -63,8 +63,19 @@ class TasksModel {
             return json_encode(["status"=>"bad"]);
 
         }
+    }
 
 
+    public function getTask(int $id) {
+
+
+        return (rb\R::getAll("SELECT tasks.id, tasks.name, tasks.description, tasks.date_open, tasks.date, department.name AS department_name, kanban.name AS kanban, worker.name AS worker, worker.id AS worker_id, owner.name AS owner, owner.id AS owner_id, taskStatus.name AS current_status, taskStatus.color AS color_status FROM tasks 
+                                                JOIN department ON tasks.dep_id = department.id
+                                                JOIN kanban ON tasks.kanban_id = kanban.id
+                                                JOIN users AS worker ON tasks.worker_id = worker.id
+                                                JOIN users AS owner ON tasks.owner_id = owner.id
+                                                JOIN taskStatus ON tasks.status = taskStatus.id
+                                                WHERE tasks.id = '$id';"));
     }
 
 
