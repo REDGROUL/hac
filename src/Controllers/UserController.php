@@ -28,9 +28,8 @@ class UserController extends BaseController
     public function login()
     {
         $json = $this->getInput();
-        $um = new um();
 
-        $res = $um->getUser($json['login'], $json['pass']);
+        $res = $this->userModel->getUser($json['login'], $json['pass']);
 
         if(!empty($res))
         {
@@ -87,7 +86,8 @@ class UserController extends BaseController
     public function getDataProfile($id) {
         $currentUser = $this->userModel->getUserById($id);
         $tasks = $this->taskMode->getTaskByUserId($id);
-        return $this->blade->make('profile', ['title'=>'Профиль','navbar_show'=>true, 'userData'=>$currentUser, 'tasks'=>$tasks])->render();
+        return $this->blade->make('profile', ['title'=>'Профиль','navbar_show'=>true, 'userData'=>$currentUser,
+            'tasks'=>$tasks])->render();
     }
 
     public function getPrepareLogin(){
