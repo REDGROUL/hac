@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Controllers\BaseAuth;
+use Exception;
 use  \RedBeanPHP as rb;
 
 class TasksModel
 {
-
 
     public function getAllBoard()
     {
@@ -31,15 +30,8 @@ class TasksModel
     }
 
 
-    public function getTaskById($id)
-    {
-        return rb\R::load('tasks', $id);
-    }
-
     public function getTaskByUserId($id)
     {
-
-
         return rb\R::find('tasks', 'worker_id = ? OR owner_id = ?', [$id, $id]);
     }
 
@@ -69,7 +61,7 @@ class TasksModel
 
             rb\R::store($currentTask);
             return json_encode(["status" => "ok"]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo $e->getMessage();
             return json_encode(["status" => "bad"]);
 
@@ -79,8 +71,10 @@ class TasksModel
 
     public function getTask(int $id) {
 
-
-        return (rb\R::getAll("SELECT tasks.id, tasks.name, tasks.description, tasks.date_open, tasks.date, department.name AS department_name, kanban.name AS kanban, worker.name AS worker, worker.id AS worker_id, owner.name AS owner, owner.id AS owner_id, taskStatus.name AS current_status, taskStatus.color AS color_status FROM tasks 
+        return (rb\R::getAll("SELECT tasks.id, tasks.name, tasks.description, tasks.date_open, tasks.date, 
+                                    department.name AS department_name, kanban.name AS kanban, worker.name AS worker, worker.id AS worker_id, 
+                                    owner.name AS owner, owner.id AS owner_id, taskStatus.name AS current_status, taskStatus.color AS color_status 
+                                    FROM tasks 
                                                 JOIN department ON tasks.dep_id = department.id
                                                 JOIN kanban ON tasks.kanban_id = kanban.id
                                                 JOIN users AS worker ON tasks.worker_id = worker.id

@@ -13,7 +13,6 @@ class kanbanModel
 
     public function addBoard($data) {
         $db = rb\R::dispense('kanban');
-
         $db->name = $data['name'];
         $db->description = $data['descr'];
 
@@ -27,16 +26,14 @@ class kanbanModel
             return $e->getMessage();
         }
 
-
     }
-
 
     public function delBoard($data) {
 
         $record = rb\R::load('kanban', $data['id']); // Загрузка записи по id из таблицы
         rb\R::trash($record);
 
-        echo json_encode([
+        return json_encode([
             "status"=>$data['id'],
         ]);
     }

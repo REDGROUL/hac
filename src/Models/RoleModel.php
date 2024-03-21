@@ -1,7 +1,7 @@
 <?php
 
-
 namespace App\Models;
+
 use  \RedBeanPHP as rb;
 
 class RoleModel

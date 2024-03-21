@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Models;
+
+use Exception;
 use Jenssegers\Blade\Blade;
 use  \RedBeanPHP as rb;
 
 class UserModel
 {
-
     private Blade $blade;
 
     public function __construct()
@@ -27,7 +28,7 @@ class UserModel
             rb\R::store($userDb);
             return json_encode(['status'=>"ok"]);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return json_encode(['status'=>"bad"]);
         }
 
