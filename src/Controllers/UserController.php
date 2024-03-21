@@ -6,7 +6,6 @@ use App\Models\TasksModel;
 use Firebase\JWT\JWT;
 use Jenssegers\Blade\Blade;
 
-
 class UserController extends BaseController
 {
 

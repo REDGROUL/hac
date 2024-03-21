@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Controllers;
-
 
 use App\Models\DepartmentModel;
 use Jenssegers\Blade\Blade;
@@ -11,6 +9,7 @@ class DepartmentController extends BaseController
 {
     private DepartmentModel $dep;
     private Blade $blade;
+
     function __construct()
     {
         $this->dep = new DepartmentModel();

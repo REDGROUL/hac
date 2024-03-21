@@ -1,9 +1,8 @@
 <?php
 
-
 namespace App\Models;
-use  RedBeanPHP as rb;
 
+use  RedBeanPHP as rb;
 
 class kanbanModel
 {
@@ -15,10 +14,8 @@ class kanbanModel
     public function addBoard($data) {
         $db = rb\R::dispense('kanban');
 
-
         $db->name = $data['name'];
         $db->description = $data['descr'];
-
 
         try {
             rb\R::store($db);
@@ -38,8 +35,6 @@ class kanbanModel
 
         $record = rb\R::load('kanban', $data['id']); // Загрузка записи по id из таблицы
         rb\R::trash($record);
-
-
 
         echo json_encode([
             "status"=>$data['id'],
