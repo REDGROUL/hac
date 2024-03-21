@@ -4,7 +4,7 @@
     <style>
         .task-photo{
             height: 200px;
-            background: url("/{{$currentTask['task_photo']}}");
+            /*background: url("/");*/
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -40,7 +40,7 @@
             <div class="card-body cb-title">
 
                 <div class="title-card card">
-                    <h1 class="text-center">{{$currentTask['name']}}🔰</h1>
+                    <h1 class="text-center">{{$task['name']}}🔰</h1>
                 </div>
             </div>
         </div>
@@ -57,14 +57,14 @@
 {{--            </div>--}}
 {{--        </div>--}}
 {{--    </div>--}}
-    <input hidden value="{{$currentTask['id']}}" id="task_id">
-    <input hidden value="{{$currentTask['name']}}" id="task_name">
+    <input hidden value="{{$task['id']}}" id="task_id">
+    <input hidden value="{{$task['name']}}" id="task_name">
     <div class="row row-cols-1 row-cols-md-2 g-4">
         <div class="col">
-            <div class="card bg-{{$currentTask['status']['color']}}">
+            <div class="card bg-{{$task['color_status']}}">
                 <div class="card-body ">
                     <h4 class="card-title">Статус</h4>
-                    <p class="card-text ">{{$currentTask['status']['name']}}</p>
+                    <p class="card-text ">{{$task['current_status']}}</p>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Описание</h4>
-                    <p class="card-text">{{$currentTask['description']}}</p>
+                    <p class="card-text">{{$task['description']}}</p>
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Открыта:</h4>
-                    <p class="card-text">{{$currentTask['date_open']}}</p>
+                    <p class="card-text">{{$task['date_open']}}</p>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Дата и время сдачи</h4>
-                    <p class="card-text">{{$currentTask['date']}}</p>
+                    <p class="card-text">{{$task['date']}}</p>
                 </div>
             </div>
         </div>
@@ -99,12 +99,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Постановщик</h4>
-
-                    <?
-                    $um = new \App\Models\UserModel();
-                    $user1 = $um->getUserById($currentTask['owner_id']);
-                    ?>
-                    <p class="card-text"><a href="/profile/{{$user1['id']}}">{{$user1['name']}}</a></p>
+                    <p class="card-text"><a href="/profile/{{$task['owner_id']}}">{{$task['owner']}}</a></p>
                 </div>
             </div>
         </div>
@@ -112,10 +107,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Ответственный</h4>
-                    <?
-                    $user2 = $um->getUserById($currentTask['worker_id']);
-                    ?>
-                    <p class="card-text"><a href="/profile/{{$user2['id']}}">{{$user2['name']}}</a></p>
+                    <p class="card-text"><a href="/profile/{{$task['worker_id']}}">{{$task['worker']}}</a></p>
                 </div>
             </div>
         </div>
@@ -158,7 +150,7 @@
                             <div class="col">
                                 <h4>Добавить комментарий</h4>
                                 <div class="mb-3">
-                                    <input hidden id="task_id" value="{{$currentTask['id']}}">
+                                    <input hidden id="task_id" value="{{$task['id']}}">
 
                                     <textarea class="form-control" id="newCommentAdd" rows="3"></textarea>
                                 </div>
@@ -173,36 +165,36 @@
                 </div>
 
 
-                @foreach($comments as $comment)
+{{--                @foreach($comments as $comment)--}}
 
-                    <div class="card comment_card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
+{{--                    <div class="card comment_card">--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="col">--}}
 
-                                    @if($comment['user_data']['photo'] == null)
-                                        <img src="/res/images/nopic.jpg" class="mr-3 align-self-start profile-pic-mini"
-                                             alt="Фото профиля" width="64" height="64">
-                                    @else
-                                        <img src="{{$comment['user_data']['photo']}}"
-                                             class="mr-3 align-self-start profile-pic-mini" alt="Фото профиля"
-                                             width="64" height="64">
-                                    @endif
-                                    <a href="/profile/{{$comment['user_data']['id']}}"> {{$comment['user_data']['name']}}</a>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="card-text">{{$comment['text']}}</p>
-                                    {{$comment['date']}}
-                                </div>
+{{--                                    @if($comment['user_data']['photo'] == null)--}}
+{{--                                        <img src="/res/images/nopic.jpg" class="mr-3 align-self-start profile-pic-mini"--}}
+{{--                                             alt="Фото профиля" width="64" height="64">--}}
+{{--                                    @else--}}
+{{--                                        <img src="{{$comment['user_data']['photo']}}"--}}
+{{--                                             class="mr-3 align-self-start profile-pic-mini" alt="Фото профиля"--}}
+{{--                                             width="64" height="64">--}}
+{{--                                    @endif--}}
+{{--                                    <a href="/profile/{{$comment['user_data']['id']}}"> {{$comment['user_data']['name']}}</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="col">--}}
+{{--                                    <p class="card-text">{{$comment['text']}}</p>--}}
+{{--                                    {{$comment['date']}}--}}
+{{--                                </div>--}}
 
 
-                            </div>
+{{--                            </div>--}}
 
-                        </div>
-                    </div>
-                @endforeach
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @endforeach--}}
 
 
             </div>
@@ -224,20 +216,20 @@
                     <div class="mb-3">
                         <label for="nameTask" class="form-label">Название</label>
                         <input type="text" name="name" class="form-control" id="nameTask"
-                               value="{{$currentTask['name']}}" placeholder="Введите название">
+                               value="{{$task['name']}}" placeholder="Введите название">
 
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Описание</label>
                         <textarea class="form-control" name="description" id="description" rows="3"
-                                  placeholder="Введите описание">{{$currentTask['description']}}</textarea>
+                                  placeholder="Введите описание">{{$task['description']}}</textarea>
                     </div>
 
 
                     <div class="mb-3">
                         <label for="date" class="form-label">Число и время сдачи</label>
                         <input type="datetime-local" name="date" class="form-control" id="date" rows="3"
-                               placeholder="Введите описание" value="{{$currentTask['date']}}"></input>
+                               placeholder="Введите описание" value="{{$task['date']}}"></input>
                     </div>
 
                     <div class="mb-3">
