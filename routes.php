@@ -7,9 +7,10 @@ use Steampixel\Route;
 use App\Controllers\TaskController;
 session_start();
 
+
 if(isset($_SESSION['auth'])) {
 
-    Route::add('/tasks', fn()=>(new TaskController())->getPrepareTasks());
+    Route::add('/tasks', fn()=>(new TaskController())->getPrepareKanbanById($_SESSION['dep']));
 
     Route::add('/task/([0-9-]*)', fn($id)=>(new TaskController())->getDetailTask($id));
 
