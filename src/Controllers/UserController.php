@@ -1,10 +1,14 @@
 <?php
 namespace App\Controllers;
 
+use App\Model\User;
 use App\Models\UserModel;
 use App\Models\TasksModel;
+use App\Service\Impl\UserServiceImpl;
+use App\Service\Interfaces\UserService;
 use Firebase\JWT\JWT;
 use Jenssegers\Blade\Blade;
+use mysql_xdevapi\Exception;
 
 class UserController extends BaseController
 {
@@ -12,11 +16,14 @@ class UserController extends BaseController
     private UserModel $userModel;
     private TasksModel $taskMode;
     private Blade $blade;
-
+    private UserService $userService;
     function __construct()
     {
+        $this->userService = new UserServiceImpl();
+
         $this->userModel = new UserModel();
         $this->taskMode = new TasksModel();
+
         $this->blade = new Blade('src/views','src/cache');
     }
 
@@ -72,7 +79,15 @@ class UserController extends BaseController
 
     public function addUser() {
         $data = $this->getInput();
-        return $this->userModel->addUser($data);
+        $user = new User();
+        $user->setLogin($data['login']);
+        $user->setPassword($data['pass']);
+        $user->setName($data['name']);
+        $user->setRole($data['role']);
+        $user->setDepartment($data['dep']);
+
+        return json_encode(["status"=>$this->userService->setNewUser($user)]);
+
     }
 
     public function getUserByDepId($id) {

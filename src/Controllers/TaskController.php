@@ -50,10 +50,20 @@ class TaskController extends BaseController
     }
 
     public function getDetailTask($id) {
-        $data = $this->getTask($id)[0];
-        $comments = $this->commentModel->getCommentsByTaskId($data[0]['id']);
+
+            $data = $this->getTask($id)[0];
+            $comments = $this->commentModel->getCommentsByTaskId($data['id']);
+
+            $data['comments'] = $comments;
+            $this->setRedisData("taskDetail_".$id, json_encode($data));
+
+
+
+
+
+
         return $this->blade->make('taskDetail', ['title'=>'Задача','navbar_show'=>true, 'task'=>$data,
-            'comments'=>$comments])->render();
+            'comments'=>$data['comments']])->render();
     }
 
     public function getPrepareKanbanById($dep_id) {
