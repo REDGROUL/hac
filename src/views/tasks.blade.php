@@ -34,9 +34,9 @@ $departs = $dm->getAllDerartments();
                 <h3 class="card-title h5 mb-1">
 
                     @if(isset($curent_dep))
-                    {{$departs[$curent_dep]['dep_name']}}
+                    {{$departs[$curent_dep]['name']}}
                     @else
-                    {{$departs[$_SESSION['dep']]['dep_name']}}
+                    {{$departs[$_SESSION['dep']]['name']}}
                     @endif
                 </h3>
             </div>
