@@ -5,6 +5,10 @@ use App\Models\CommentsModel;
 use App\Models\TasksModel;
 use App\Models\TaskStatusModel;
 use App\Models\UserModel;
+use App\Security\Auth;
+use App\Security\SimpleSecurity;
+use App\Service\Impl\UserServiceImpl;
+use App\Service\Interfaces\UserService;
 use Jenssegers\Blade\Blade;
 
 
@@ -13,7 +17,7 @@ class TaskController extends BaseController
     private TasksModel $taskModel;
     private TaskStatusModel $taskStatusModel;
     private CommentsModel $commentModel;
-    private UserModel $userModel;
+    private UserService $userService;
     private Blade $blade;
 
     function __construct()
@@ -21,7 +25,7 @@ class TaskController extends BaseController
         $this->taskModel = new TasksModel();
         $this->commentModel = new CommentsModel();
         $this->taskStatusModel = new TaskStatusModel();
-        $this->userModel = new UserModel();
+        $this->userService = new UserServiceImpl();
         $this->blade = new Blade('src/views','src/cache');
     }
 
@@ -32,6 +36,7 @@ class TaskController extends BaseController
     }
 
     public function newTask() {
+        var_dump($_POST);
         return $this->taskModel->newTask();
     }
 
@@ -77,7 +82,7 @@ class TaskController extends BaseController
                 "color" =>$stats[$task['status']]['color'],
             ];
         }
-        $users = $this->userModel->getAllusers();
+        $users = $this->userService->findAllUser();
         return $this->blade->make('tasks', ['title'=>'Задачи','navbar_show'=>true, 'boards'=>$boards, 'tasks'=>$tasks, 'users'=>$users, 'statuses'=>$stats, 'curent_dep'=>$dep_id])->render();
     }
 }
