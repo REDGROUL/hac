@@ -5,8 +5,8 @@ use App\Controllers\CommentController;
 use App\Controllers\DepartmentController;
 use App\Controllers\TaskController;
 use App\Controllers\UserController;
+use App\Security\SimpleSecurity;
 use Steampixel\Route;
-Route::add('/tasks/([0-9-]*)', fn($id)=>(new TaskController())->getTask($id));
 if(isset($_SESSION['auth'])) {
 
     Route::add('/tasks/changeStatus', fn()=>(new TaskController())->changeStatus(), 'post');
@@ -25,10 +25,13 @@ if(isset($_SESSION['auth'])) {
 
     Route::add('/addDep',fn()=>(new DepartmentController())->createDep(), 'post');
 
-    Route::add('/getUserByDep/([0-9-]*)',fn($id)=>(new DepartmentController())->getDepartmentNameById($id));
+    Route::add('/getUserByDep/([0-9-]*)',fn($id)=>(new UserController())->getUserByDepId($id));
 
     Route::add('/updateTask',fn()=>(new TaskController())->updateTask(), 'post');
 
 } else{
-    Route::add('/login', fn()=>(new UserController())->login(), 'post');
+    Route::add('/auth', fn()=>(new SimpleSecurity())->auth(), 'post');
+
 }
+
+
