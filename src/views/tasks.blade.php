@@ -3,7 +3,7 @@
 <?
 $dm = new \App\Models\DepartmentModel();
 $departs = $dm->getAllDerartments();
-var_dump($_SESSION);
+
 
 ?>
 <div class="container py-5">
@@ -21,7 +21,7 @@ var_dump($_SESSION);
 
                 <ul class="list-group">
                     @foreach($departs as $dep)
-                    <li class="list-group-item"><a href="/tasks/{{$dep['id']}}">{{$dep['dep_name']}}</a></li>
+                    <li class="list-group-item"><a href="/tasks/{{$dep['id']}}">{{$dep['name']}}</a></li>
                     @endforeach
                 </ul>
             </div>
