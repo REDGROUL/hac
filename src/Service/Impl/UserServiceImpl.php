@@ -17,6 +17,10 @@ class UserServiceImpl implements UserService
         $this->userDao = new UserDaoImp();
     }
 
+    function findAllUser() {
+        return $this->userDao->findAllUsers();
+    }
+
     function findUserById(int $id)
     {
        return $this->userDao->findUserById($id);
@@ -24,7 +28,7 @@ class UserServiceImpl implements UserService
 
     function findUserByLoginAndPassword(User $user)
     {
-        return $this->findUserByLoginAndPassword($user);
+        return $this->userDao->findUserByLoginAndPassword($user);
     }
 
     function findAllUsersByDepartmentId(int $id)
@@ -35,5 +39,9 @@ class UserServiceImpl implements UserService
     function setNewUser(User $user)
     {
         return $this->userDao->setNewUser($user);
+    }
+
+    function findUserByDepartmentId($id) {
+        return $this->userDao->getUserByDepId($id);
     }
 }

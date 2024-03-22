@@ -15,7 +15,11 @@ class UserDaoImp implements UserDao
 
     function findUserByLoginAndPassword(User $user): ?rb\OODBBean
     {
-        return rb\R::findOne('users', 'login = ? AND password = ?', [$user->getLogin(), $user->getPassword()]);
+        return rb\R::findOne('users', 'login = ? AND pass = ?', [$user->getLogin(), $user->getPassword()]);
+    }
+
+    function findAllUsers() {
+        return rb\R::findAll('users');
     }
 
     function setNewUser(User $user): bool
