@@ -55,7 +55,7 @@ saveTask.addEventListener("click", ()=>{
 
 
 
-    fetch('/tasks/newTask',{
+    fetch('/tasks/newTasks',{
         method: 'POST',
         body: formData,
 
@@ -71,10 +71,10 @@ saveTask.addEventListener("click", ()=>{
 
             ShowNotify("Менеджер задач", "Сохраняем и обновляем", 'success');
             //
-            setTimeout(function() {
-                // Перезагрузить текущую страницу
-                location.reload();
-            }, 500);
+            // setTimeout(function() {
+            //     // Перезагрузить текущую страницу
+            //     location.reload();
+            // }, 500);
 
 
 
