@@ -24,7 +24,7 @@ session_start();
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container">
-        <a class="navbar-brand" href="/tasks">Awesome Kanban</a>
+        <a class="navbar-brand" href="/tasks">Awesome Kanban <img src="../res/images/logo-r.svg" width="24px"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
