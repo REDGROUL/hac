@@ -13,7 +13,6 @@ use mysql_xdevapi\Exception;
 class UserController extends BaseController
 {
 
-    private UserModel $userModel;
     private TasksModel $taskMode;
     private Blade $blade;
     private UserService $userService;
@@ -21,7 +20,6 @@ class UserController extends BaseController
     {
         $this->userService = new UserServiceImpl();
 
-        $this->userModel = new UserModel();
         $this->taskMode = new TasksModel();
 
         $this->blade = new Blade('src/views','src/cache');
