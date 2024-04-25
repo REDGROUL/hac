@@ -11,7 +11,7 @@ if(isset($_SESSION['auth'])) {
 
     Route::add('/tasks/changeStatus', fn()=>(new TaskController())->changeStatus(), 'post');
 
-    Route::add('/tasks/newTasks', fn()=>(new TaskController())->newTask());
+    Route::add('/tasks/newTasks', fn()=>(new TaskController())->newTask(),'post');
 
     Route::add('/addNewComment', fn()=>(new CommentController())->addNewComment(), 'post');
 
@@ -25,6 +25,7 @@ if(isset($_SESSION['auth'])) {
 
     Route::add('/addDep',fn()=>(new DepartmentController())->createDep(), 'post');
 
+//    Route::add('/getUserByDep/([0-9-]*)',fn($id)=>(new UserController())->getUserByDepId($id));
     Route::add('/getUserByDep/([0-9-]*)',fn($id)=>(new UserController())->getUserByDepId($id));
 
     Route::add('/updateTask',fn()=>(new TaskController())->updateTask(), 'post');
