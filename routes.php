@@ -29,6 +29,6 @@ if(isset($_SESSION['auth'])) {
         header('Location: /');
     });
 
-} else {
-    Route::add('/',fn()=>(new UserController())->getPrepareLogin());
 }
+
+Route::add('/',fn()=>(new UserController())->getPrepareLogin());
