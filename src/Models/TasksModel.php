@@ -86,14 +86,16 @@ class TasksModel
     public function newTask() {
         if(!($_FILES['file']['size'] > 0)) {
             $_POST['photo'] = "res/images/noimage.jpg";
+        }else{
+            $uploaddir = 'res/images/';
+            $uploadfile = $uploaddir . basename($_FILES['file']['name']);
+
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+                $_POST['photo'] = $uploadfile;
+            }
         }
 
-        $uploaddir = 'res/images/';
-        $uploadfile = $uploaddir . basename($_FILES['file']['name']);
 
-        if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
-            $_POST['photo'] = $uploadfile;
-        }
 
 
         $taskDb = rb\R::dispense('tasks');
