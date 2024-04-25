@@ -1,5 +1,50 @@
+
+
 body{
-    background: #8B939C;;
+    color: #5A3E4A;
+    background: #f7f2fa;
+    font-family: Roboto;
+    height: 100vh;
+}
+
+.md-card{
+    background: #ffd9e3;
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.md-input{
+    margin-bottom: 15px;
+}
+.md-primary{
+
+}
+.md-margin{
+    margin-left:15px;
+    margin-top:15px;
+}
+.md-color{
+    color: #cde7ec;
+}
+
+.mgp{
+    margin-bottom: 15px;
+}
+
+.md-background-color{
+    background: #edefe5;
+}
+.md-left{
+    margin-left: 15px;
+}
+
+.color-green{
+    color: #d8e7cb;
+}
+@font-face {
+    font-family: Roboto;
+    src: url(../font/Roboto-Regular.ttf);
 }
 
 .text_course{

@@ -9,23 +9,25 @@
 <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">Авторизация в Awesome kanban</div>
-                <h2></h2>
+            <div class="text-center">
+                <img src="res/images/big-logo.svg">
+            </div>
+            <mdui-card class="md-card">
+                <h2>Авторизация</h2>
+
                 <div class="card-body">
-                    <div class="mb-3">
-                        <label for="loginUsername" class="form-label">Имя пользователя</label>
-                        <input type="text" class="form-control" id="loginUsername" name="username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="loginPassword" class="form-label">Пароль</label>
-                        <input type="password" class="form-control" id="loginPassword" name="password" required>
-                    </div>
+                    <mdui-text-field class="md-input" variant="outlined" id="loginUsername" name="username"
+                                     label="Логин"></mdui-text-field>
+
+                    <mdui-text-field class="md-input" variant="outlined" type="password" id="loginPassword"
+                                     name="password" label="Пароль"></mdui-text-field>
+
                     <div class="text-center">
-                        <button type="submit" id="login" class="btn btn-primary">Войти</button>
+                        <mdui-button type="submit" id="login">Авторизация</mdui-button>
+
                     </div>
                 </div>
-            </div>
+            </mdui-card>
         </div>
     </div>
 </div>

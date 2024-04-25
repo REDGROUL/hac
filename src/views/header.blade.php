@@ -11,10 +11,12 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../src/views/css/bootstrap.css">
     <link rel="stylesheet" href="../src/views/css/style.css">
-
+    <link rel="stylesheet" href="../src/views/css/mdui.css">
+    <link href="../src/views/css/icon.css" rel="stylesheet">
     <script src="../src/views/js/bootstrap.js"></script>
     <script src="../src/views/js/bootstrap.bundle.js"></script>
     <script src="../src/views/js/scrept.js"></script>
+    <script src="../src/views/js/mdui.global.js"></script>
 
     <title>{{$title}}</title>
 </head>
@@ -24,16 +26,17 @@ session_start();
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container">
-        <a class="navbar-brand" href="/tasks">Awesome Kanban <img src="../res/images/logo-r.svg" width="24px"></a>
+        <a class="navbar-brand" href="/tasks"><img src="../res/images/big-logo.svg"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="/tasks" class="nav-link active" aria-current="page" href="#">Канбан</a>
                 </li>
-
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

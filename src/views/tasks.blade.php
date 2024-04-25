@@ -3,275 +3,252 @@
 <?
 $dm = new \App\Models\DepartmentModel();
 $departs = $dm->getAllDerartments();
-
-
 ?>
 <div class="container py-5">
     @if($_SESSION['role'] == '1')
-        <div class="card mb-3">
-            <div class="card-header bg-light">
-                <h3 class="card-title h5 mb-1">
-                    Выбор отдела
-                </h3>
-            </div>
 
-            <div class="card-body">
+        <mdui-card variant="elevated" style="width:100%" class="mgp">
+
+            <mdui-list style="background: #ffd9e3">
+                <mdui-collapse accordion>
+                    <mdui-collapse-item>
+                        <mdui-list-item slot="header" icon="near_me">Отделы
+                            ( @if(isset($curent_dep))
+                                {{$departs[$curent_dep]['name']}}
+                            @else
+                                {{$departs[$_SESSION['dep']]['name']}}
+                            @endif
+                            )
+                        </mdui-list-item>
 
 
+                        <div>
+                            @foreach($departs as $dep)
+                                <mdui-list-item href="/tasks/{{$dep['id']}}">{{$dep['name']}}</mdui-list-item>
+                            @endforeach
+                        </div>
+                    </mdui-collapse-item>
+                </mdui-collapse>
+            </mdui-list>
 
-                <ul class="list-group">
-                    @foreach($departs as $dep)
-                    <li class="list-group-item"><a href="/tasks/{{$dep['id']}}">{{$dep['name']}}</a></li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
+        </mdui-card>
+
 
     @endif
 
-        <div class="card mb-3">
-            <div class="card-header bg-light">
-                <h3 class="card-title h5 mb-1">
+    <mdui-dialog close-on-esc
+                 close-on-overlay-click class="example-dialog">
+        <h2>Добавить задачу</h2><br>
+        <form id="newTaskForm" method="POST" enctype="multipart/form-data">
+            <div>
+                <input hidden name="kanban_id" id="modal_board_id">
+                <input hidden name="owner_id" id="modal_owner_id">
+                <div class="mb-3">
+                    <mdui-text-field name="name" id="title" label="Название"></mdui-text-field>
+                </div>
+                <div class="mb-3">
+                    <mdui-text-field rows="3" name="description" id="description" label="Описание"></mdui-text-field>
+                </div>
 
-                    @if(isset($curent_dep))
-                    {{$departs[$curent_dep]['name']}}
-                    @else
-                    {{$departs[$_SESSION['dep']]['name']}}
-                    @endif
-                </h3>
+
+                <div class="mb-3">
+                    <mdui-select value="1" name="dep_id" id="dep_id">
+                        <mdui-menu-item value="1">Выбор отдела</mdui-menu-item>
+                        @foreach($departs as $dep)
+                            <mdui-menu-item value="{{$dep['id']}}">{{$dep['name']}}</mdui-menu-item>
+                        @endforeach
+
+                    </mdui-select>
+                </div>
+                <div class="mb-3">
+                    <mdui-select label="Сотрудники отдела" name="worker_id" id="worker">
+                    </mdui-select>
+                </div>
+
+                <div class="mb-3">
+                    <mdui-text-field type="datetime-local" name="date" id="date" label="Дата сдачи"></mdui-text-field>
+                </div>
+
+                <div class="mb-3">
+
+                    <mdui-select value="1" name="status" id="status">
+
+                        @foreach($statuses as $status)
+                            <mdui-menu-item value="{{$status['id']}}">{{$status['name']}}</mdui-menu-item>
+                        @endforeach
+
+                    </mdui-select>
+                </div>
+
+                <div class="input-group">
+                    <mdui-text-field type="file" name="file" id="fileInput" label="Фото задачи"></mdui-text-field>
+                </div>
+
             </div>
+        </form>
+
+        <div class="mb-3">
+            <mdui-button id="saveTask">Создать</mdui-button>
+            <br>
+            <mdui-button class="closeDialog" id="closeDialog">Закрыть форму</mdui-button>
+            <br>
         </div>
+        <script>
 
+        </script>
+    </mdui-dialog>
     <div class="row">
-    @foreach($boards as $board)
-
-        <!-- Start lane -->
+        @foreach($boards as $board)
             <div class=" col-lg-3">
-                <div class="card mb-3">
-                    <div class="card-header bg-light">
-                        <h3 class="card-title h5 mb-1">
-                            {{$board['name']}}
-                        </h3>
-                        <small class="mb-0 text-muted">
-                            {{$board['description']}}
-                        </small>
-                    </div>
-                    <div class="card-body">
-                        <div class="tasks" id="{{$board['id']}}">
-                            <!-- Start task -->
+                <mdui-button class="addTask" id="btn_board_id_{{$board['id']}}" variant="filled"
+                             style=" margin-bottom: 15px; width:100%">Новая задача
+                </mdui-button>
+                <mdui-card variant="elevated" class="" style="width: 100%; min-height: 450px; background: #ffd9e3">
+                    <h3 class="md-margin"> {{$board['name']}}</h3>
 
-                            @foreach($tasks as $task)
-                                @if($task['kanban_id'] == $board['id'])
-
-                                    <div class="card mb-3 cursor-grab task" id="{{$task['id']}}">
-                                        <div class="card-body">
+                    <div class="tasks" id="{{$board['id']}}" style="padding: 10px">
+                        @foreach($tasks as $task)
+                            @if($task['kanban_id'] == $board['id'])
+                                <div class=" mb-3 cursor-grab task" id="{{$task['id']}} "
+                                     style="background: #e8def8; border-radius: 15px">
+                                    <mdui-card variant="elevated " style="background: #e8def8; margin-bottom: 15px"
+                                               id="{{$task['id']}}">
+                                        @if($task['task_photo'] != "/res/images/noimage.jpg")
                                             <img class="card-img-top"
                                                  src="/{{$task['task_photo']}}"
-                                                 alt="Bootstrap Kanban Board"/>
-                                            <h5 class="mb-2"><a href="/task/{{$task['id']}}">{{$task['name']}}</a></h5>
-
-
-                                            <div class="text-right">
-                                                Описание: {{$task['description']}}
-                                            </div>
-
-                                            <div class="text-right">
-                                                Отдел: {{$departs[$task['dep_id']]['name']}}
-                                            </div>
-                                            <div class="text-right">
-                                                Назначил: {{$users[$task['owner_id']]['name']}}
-                                            </div>
-                                            <div class="text-right">
-                                                Ответственный: {{$users[$task['worker_id']]['name']}}
-                                            </div>
-                                            <div class="text-right">
-                                                Открыта: {{$task['date_open']}}
-                                            </div>
-
-                                            <div class="text-right">
-                                                Дата: {{$task['date']}}
-                                            </div>
-
-
-                                            <div class="text-right" id="task-status">
-                                                <span class="badge bg-{{$task['status']['color']}} text-white mb-2"> {{$task['status']['name']}}</span>
-                                            </div>
+                                                 alt=""/>
+                                        @endif
+                                        <div class="md-margin">
+                                            <h4>{{$task['name']}}</h4>
+                                        </div>
+                                        <div class="text-right md-left">
+                                            Инфо: {{$task['description']}}
 
                                         </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                        <div class="btn btn-primary btn-block addTask" id="btn_board_id_{{$board['id']}}">Новая задача
-                        </div>
+
+                                        <div class="text-right md-left">
+                                            Назначил: {{$users[$task['owner_id']]['name']}}
+
+                                        </div>
+                                        <div class="text-right md-left">
+                                            Ответственный: {{$users[$task['worker_id']]['name']}}
+                                        </div>
+                                        <div class="text-right md-left">
+                                            Открыта с: {{$task['date_open']}}
+                                        </div>
+
+                                        <div class="text-right md-left">
+                                            Сдача: {{$task['date']}}
+                                        </div>
+
+                                    </mdui-card>
+                                </div>
+                            @endif
+                        @endforeach
+
                     </div>
-                </div>
+
+                </mdui-card>
             </div>
+            </mdui-card>
         @endforeach
-
-
     </div>
-</div>
 
 
-<div class="modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Добавление задачи</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Форма для ввода данных -->
-                <form id="newTaskForm" method="POST" enctype="multipart/form-data">
-                    <div>
-                        <input hidden name="kanban_id" id="modal_board_id">
-                        <input hidden name = "owner_id" id="modal_owner_id">
+    <script src="../src/views/js/dragula.min.js"></script>
+    <script>
 
 
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Название</label>
-                            <input type="text" name="name" class="form-control" id="title" placeholder="Введите название">
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Описание</label>
-                            <textarea class="form-control" name="description" id="description" rows="3"
-                                      placeholder="Введите описание"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="worker" class="form-label">Отдел</label>
-                            <select class="form-select" name="dep_id" id="dep_id" aria-label="Выберите язык">
-                                <option value="0" selected>Выберите отдел</option>
-                                @foreach($departs as $dep)
-                                    <option value="{{$dep['id']}}">{{$dep['name']}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="worker" class="form-label">Ответственный за выполнение</label>
-                            <select class="form-select" name="worker_id" id="worker" aria-label="Выберите язык">
-                                <option value="">Нужно выбрать отдел</option>
-{{--                                @foreach($users as $user)--}}
-{{--                                    <option value="user_{{$user['id']}}">{{$user['name']}}</option>--}}
-{{--                                @endforeach--}}
-                            </select>
-                        </div>
+        dragula([
+            @foreach($boards as $board)
+            document.getElementById('{{$board["id"]}}'),
+            @endforeach]).on('drag', function (el) {
 
-                        <div class="mb-3">
-                            <label for="date"  class="form-label">Число и время сдачи</label>
-                            <input type="datetime-local" name="date" class="form-control" id="date" rows="3"
-                                   placeholder="Введите описание"/>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="status" class="form-label">Статус</label>
-
-                            <select class="form-select" name="status" id="status" aria-label="Выберите язык">
-                                @foreach($statuses as $status)
-                                    <option value="{{$status['id']}}">{{$status['name']}}</option>
-
-                                @endforeach
-
-                            </select>
-                        </div>
-
-                        <div class="input-group">
-
-                            <label class="input-group-text" for="fileInput">Фото</label>
-                            <input type="file" name="file" class="form-control" id="fileInput">
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary " id="saveTask" data-bs-dismiss="modal">Сохранить</button>
-            </div>
-        </div>
-    </div>
-</div>
+        }).on('drop', function (el) {
 
 
-<script src="../src/views/js/dragula.min.js"></script>
-<script>
+            console.log(el.id);
+            console.log(el.parentElement.id);
 
+            let resp = JSON.stringify({
+                "type": "changeStatus",
+                "taskId": el.id,
+                "kanban_id": el.parentElement.id
+            });
+            ShowNotify("Менеджер задач", "Меняем статус задачи");
 
-
-    dragula([
-        @foreach($boards as $board)
-        document.getElementById('{{$board["id"]}}'),
-        @endforeach]).on('drag', function (el) {
-
-    }).on('drop', function (el) {
-
-
-        console.log(el.id);
-        console.log(el.parentElement.id);
-
-        let resp = JSON.stringify({
-            "type": "changeStatus",
-            "taskId": el.id,
-            "kanban_id": el.parentElement.id
-        });
-        ShowNotify("Менеджер задач", "Меняем статус задачи");
-
-        fetch('/tasks/changeStatus', {
-            method: 'POST',
-            body: resp,
-
-        })
-            .then(response => response.text())
-
-            .then(data => {
-
-
-                console.log(data);
-
-
-                ShowNotify("Менеджер задач", "Изменение статуса задачи прошло успешно!", 'success');
+            fetch('/tasks/changeStatus', {
+                method: 'POST',
+                body: resp,
 
             })
-            .catch(error => {
-                console.log(error);
-            })
-    });
+                .then(response => response.text())
 
-    let workerlist = document.getElementById("worker");
-    let dep_id = document.getElementById("dep_id");
-
-    dep_id.addEventListener('change', ()=>{
-        workerlist.innerHTML = `\`<option value="" selected>Загружаем выбранный отдел</option>\``;
+                .then(data => {
 
 
-       // ShowNotify("Менеджер задач", "Меняем статус задачи");
-        ShowNotify("Менеджер пользователей", "Получаем данные по отделу", 'warning')
-        fetch('/getUserByDep/'+dep_id.value)
+                    console.log(data);
 
-            .then(response => response.json())
 
-            .then(data => {
-                workerlist.innerHTML = '';
-                let dt = Object.keys(data)
-                console.log(dt);
-                dt.forEach((usr)=>{
-                    console.log(data[usr].name);
-                    workerlist.innerHTML+=`<option value="user_${data[usr].id}">${data[usr].name}</option>`;
+                    ShowNotify("Менеджер задач", "Изменение статуса задачи прошло успешно!", 'success');
 
                 })
+                .catch(error => {
+                    console.log(error);
+                })
+        });
 
-                //ShowNotify("Менеджер задач", "Изменение статуса задачи прошло успешно!", 'success');
+        let workerlist = document.getElementById("worker");
+        let dep_id = document.getElementById("dep_id");
 
-            })
-            .catch(error => {
-                console.log(error);
-            })
-
-    })
+        dep_id.addEventListener('change', () => {
+            workerlist.innerHTML = `\`<option value="" selected>Загружаем выбранный отдел</option>\``;
 
 
-</script>
-<script src="../src/views/js/tasks.js"></script>
+            // ShowNotify("Менеджер задач", "Меняем статус задачи");
+            ShowNotify("Менеджер пользователей", "Получаем данные по отделу", 'warning')
+            fetch('/getUserByDep/' + dep_id.value)
+
+                .then(response => response.json())
+
+                .then(data => {
+                    workerlist.innerHTML = '';
+                    let dt = Object.keys(data)
+                    // console.log(dt);
+                    console.log(data);
+                    dt.forEach((usr) => {
+                        console.log(data[usr].name);
+                            workerlist.innerHTML += `<mdui-menu-item value="user_${data[usr].id}">${data[usr].name}</mdui-menu-item>`;
+
+                    })
+
+                    //ShowNotify("Менеджер задач", "Изменение статуса задачи прошло успешно!", 'success');
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+
+        })
+
+
+        let buttons = document.querySelectorAll('.addTask');
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                console.log("click");
+                const dialog = document.querySelector(".example-dialog");
+                dialog.open = true;
+
+                let modal_board_id = document.getElementById("modal_board_id");
+                let modal_owner_id = document.getElementById("modal_owner_id");
+
+                modal_board_id.value = event.target.id;
+                modal_owner_id.value = localStorage.getItem("uid");
+
+            });
+        });
+    </script>
+    <script src="../src/views/js/tasks.js"></script>
 
 
 @include('footer')
